@@ -28,6 +28,12 @@ public class QuizService {
         return quizRepository.findByUserId(userId);
     }
 
+    public Quiz getQuizById(long quizId) throws QuizNotFoundException {
+        return quizRepository
+                .findById(quizId)
+                .orElseThrow(() -> QuizNotFoundException.fromId(quizId));
+    }
+
     public Quiz getQuizByIdAndUserId(long quizId, long userId) throws QuizNotFoundException {
         return quizRepository
                 .findByIdAndUserId(quizId, userId)

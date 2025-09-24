@@ -98,7 +98,7 @@ public class Controller {
     public ResponseEntity<APIResponse<Quiz>> handleInsertQuiz(
             @RequestBody Quiz quiz, HttpServletRequest request) {
         long userId = authService.verify(request).getUserId();
-        Quiz newQuiz = new Quiz(userId, quiz.getName());
+        Quiz newQuiz = new Quiz(userId, quiz.getName(), quiz.getQuestions(), quiz.getResults());
         return APIResponse.ok(quizService.insertQuiz(newQuiz));
     }
 
@@ -109,13 +109,11 @@ public class Controller {
         return APIResponse.ok(quizService.getQuizzesByUserId(userId));
     }
 
-    @Auth
     @GetMapping("/api/quizzes/{quizId}")
     public ResponseEntity<APIResponse<Quiz>> handleGetQuizById(
             @PathVariable("quizId") long quizId, HttpServletRequest request) {
-        long userId = authService.verify(request).getUserId();
         try {
-            Quiz quiz = quizService.getQuizByIdAndUserId(quizId, userId);
+            Quiz quiz = quizService.getQuizById(quizId);
             return APIResponse.ok(quiz);
         } catch (QuizNotFoundException ex) {
             return APIResponse.notFound();
@@ -127,7 +125,7 @@ public class Controller {
     public ResponseEntity<APIResponse<Quiz>> handleUpdateQuizById(
             @PathVariable("quizId") long quizId, @RequestBody Quiz quiz, HttpServletRequest request) {
         long userId = authService.verify(request).getUserId();
-        Quiz quizUpdate = new Quiz(quizId, userId, quiz.getName());
+        Quiz quizUpdate = new Quiz(quizId, userId, quiz.getName(), quiz.getQuestions(), quiz.getResults());
         try {
             return APIResponse.ok(quizService.updateQuiz(quizUpdate));
         } catch (QuizNotFoundException ex) {
