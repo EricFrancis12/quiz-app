@@ -31,12 +31,20 @@ public class User {
     }
 
     public User(String username, String password) {
+        this(null, username, password);
+    }
+
+    public User(Long id, String username, String password) {
+        this.id = id;
         this.username = username;
-        this.hashedPassword = hashPassword(password);
+        if (password != null) {
+            this.hashedPassword = hashPassword(password);
+        }
     }
 
     // TODO: should we have a HashedPassword class?
     public static String hashPassword(String password) {
+        // TODO: refactor to use bcrypt
         return HashingUtil.hashSHA256(password);
     }
 
