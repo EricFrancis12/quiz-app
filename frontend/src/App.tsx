@@ -7,6 +7,7 @@ import LogoutPage from "./pages/LogoutPage";
 import DashboardPage from "./pages/DashboadPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import QuizPage from "./pages/QuizPage";
+import EditQuizPage from "./pages/EditQuizPage";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/quiz/:quizId" element={<QuizPage />} />
+        <Route path="/quiz/:quizId/edit" element={<EditQuizPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

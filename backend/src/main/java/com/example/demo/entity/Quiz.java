@@ -27,7 +27,7 @@ public class Quiz {
     @JsonIgnore
     private User user;
 
-    @Column(nullable = false, length = MAX_NAME_LENGTH)
+    @Column(length = MAX_NAME_LENGTH)
     private String name;
 
     @Column(columnDefinition = "TEXT")

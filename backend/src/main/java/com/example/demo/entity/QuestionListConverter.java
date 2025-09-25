@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,7 +18,7 @@ public class QuestionListConverter implements AttributeConverter<List<Question>,
     @Override
     public String convertToDatabaseColumn(List<Question> questionList) {
         if (questionList == null || questionList.isEmpty()) {
-            return null;
+            return "[]";
         }
         try {
             return objectMapper.writeValueAsString(questionList);
@@ -29,7 +30,7 @@ public class QuestionListConverter implements AttributeConverter<List<Question>,
     @Override
     public List<Question> convertToEntityAttribute(String jsonString) {
         if (jsonString == null || jsonString.trim().isEmpty()) {
-            return null;
+            return new ArrayList<>();
         }
         try {
             return objectMapper.readValue(jsonString, new TypeReference<List<Question>>() {

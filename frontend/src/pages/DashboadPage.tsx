@@ -6,6 +6,8 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [unauthorized, setUnauthorized] = useState(false);
+  const [deleting, setDeleting] = useState<number | null>(null);
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     const fetchAppData = async () => {
@@ -40,6 +42,67 @@ export default function DashboardPage() {
 
     fetchAppData();
   }, []);
+
+  const deleteQuiz = async (quizId: number, quizName: string) => {
+    if (!confirm(`Are you sure you want to delete "${quizName}"?`)) {
+      return;
+    }
+
+    try {
+      setDeleting(quizId);
+
+      const response = await fetch(`/api/quizzes/${quizId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete quiz: ${response.statusText}`);
+      }
+
+      // Remove the deleted quiz from the local state
+      if (data) {
+        const updatedQuizzes = data.quizzes.filter(
+          (quiz) => quiz.id !== quizId
+        );
+        setData({ ...data, quizzes: updatedQuizzes });
+      }
+    } catch (err) {
+      console.error("Error deleting quiz:", err);
+      alert(`Failed to delete quiz "${quizName}". Please try again.`);
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  const createQuiz = async () => {
+    try {
+      setCreating(true);
+
+      const response = await fetch("/api/quizzes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ name: "" }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create quiz: ${response.statusText}`);
+      }
+
+      const createdQuiz = (await response.json()).data;
+
+      // Redirect to edit page for the new quiz
+      window.location.href = `/quiz/${createdQuiz.id}/edit`;
+    } catch (err) {
+      console.error("Error creating quiz:", err);
+      alert("Failed to create quiz. Please try again.");
+    } finally {
+      setCreating(false);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -76,6 +139,23 @@ export default function DashboardPage() {
       )}
 
       <div>
+        <button
+          onClick={createQuiz}
+          disabled={creating}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: creating ? "#ccc" : "#2196F3",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: creating ? "not-allowed" : "pointer",
+            fontSize: "16px",
+            marginTop: "10px",
+          }}
+        >
+          {creating ? "Creating..." : "Create Quiz"}
+        </button>
+
         <h2>Your Quizzes ({data?.quizzes.length || 0})</h2>
 
         {!data?.quizzes || data.quizzes.length === 0 ? (
@@ -89,24 +169,6 @@ export default function DashboardPage() {
             }}
           >
             <p>No quizzes found. Create your first quiz!</p>
-            <button
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#2196F3",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "16px",
-                marginTop: "10px",
-              }}
-              onClick={() => {
-                // TODO: Navigate to create quiz page
-                console.log("Navigate to create quiz");
-              }}
-            >
-              Create Quiz
-            </button>
           </div>
         ) : (
           <div style={{ display: "grid", gap: "20px" }}>
@@ -246,13 +308,8 @@ export default function DashboardPage() {
                     >
                       Take Quiz
                     </button>
-                    <button
-                      onClick={() => {
-                        console.log(
-                          "TODO: redirect to Edit Quiz Page for quiz id: " +
-                            quiz.id
-                        );
-                      }}
+                    <a
+                      href={`/quiz/${quiz.id}/edit`}
                       style={{
                         padding: "8px 16px",
                         backgroundColor: "#2196F3",
@@ -264,29 +321,23 @@ export default function DashboardPage() {
                       }}
                     >
                       Edit
-                    </button>
+                    </a>
                     <button
-                      onClick={() => {
-                        if (
-                          confirm(
-                            `Are you sure you want to delete "${quiz.name}"?`
-                          )
-                        ) {
-                          // TODO: Implement delete functionality
-                          console.log("Delete quiz", quiz.id);
-                        }
-                      }}
+                      onClick={() => deleteQuiz(quiz.id, quiz.name)}
+                      disabled={deleting === quiz.id}
                       style={{
                         padding: "8px 16px",
-                        backgroundColor: "#f44336",
+                        backgroundColor:
+                          deleting === quiz.id ? "#ccc" : "#f44336",
                         color: "white",
                         border: "none",
                         borderRadius: "4px",
-                        cursor: "pointer",
+                        cursor:
+                          deleting === quiz.id ? "not-allowed" : "pointer",
                         fontSize: "14px",
                       }}
                     >
-                      Delete
+                      {deleting === quiz.id ? "Deleting..." : "Delete"}
                     </button>
                   </div>
                 </div>
