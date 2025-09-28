@@ -47,8 +47,8 @@ Optional Ideas:
 
 ```bash
 AUTH_SECRET_KEY="MY_SECRET_KEY" \
-SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/postgres" \
-SPRING_DATASOURCE_USERNAME="postgres" \
-SPRING_DATASOURCE_PASSWORD="dev" \
+POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
+POSTGRES_USERNAME="postgres" \
+POSTGRES_PASSWORD="dev" \
 mvn spring-boot:run
 ```
