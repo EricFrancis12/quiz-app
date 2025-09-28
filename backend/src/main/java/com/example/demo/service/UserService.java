@@ -35,10 +35,13 @@ public class UserService {
     }
 
     public User getUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
-        String hashedPassword = User.hashPassword(password);
-        return userRepository
-                .findByUsernameAndHashedPassword(username, hashedPassword)
-                .orElseThrow(() -> UserNotFoundException.fromUsernameAndHashedPassword(username, hashedPassword));
+        User user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> UserNotFoundException.fromUsername(username));
+        if (!User.checkPassword(password, user.getHashedPassword())) {
+            throw UserNotFoundException.fromUsername(username);
+        }
+        return user;
     }
 
     public boolean usernameExists(String username) {

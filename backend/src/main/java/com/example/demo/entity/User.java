@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.example.demo.util.HashingUtil;
+import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,9 +43,12 @@ public class User {
     }
 
     // TODO: should we have a HashedPassword class?
-    public static String hashPassword(String password) {
-        // TODO: refactor to use bcrypt
-        return HashingUtil.hashSHA256(password);
+    private static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public static boolean checkPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
     }
 
     public Long getId() {
