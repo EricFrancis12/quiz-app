@@ -2,6 +2,8 @@ package com.example.demo.util;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -12,7 +14,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 public class JWTUtil {
 
-    private static final String SUBJECT = "TODO_CREATE_SUBJECT";
+    @Value("${spring.application.name}")
+    private static String SUBJECT;
 
     public static String generateToken(String key, long value, int durationSecs, String secretKey) {
         return generateToken(key, String.valueOf(value), durationSecs, secretKey);
