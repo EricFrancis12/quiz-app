@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FormGroup } from "../components/form";
 
 interface LoginFormData {
   username: string;
@@ -89,33 +90,28 @@ export default function LoginPage() {
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-              placeholder="Enter your username"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-              placeholder="Enter your password"
-            />
-          </div>
+          <FormGroup
+            type="text"
+            id="username"
+            name="username"
+            label="Username"
+            value={formData.username}
+            onChange={handleInputChange}
+            required
+            disabled={isLoading}
+            placeholder="Enter your username"
+          />
+          <FormGroup
+            type="password"
+            id="password"
+            name="password"
+            label="Password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+            disabled={isLoading}
+            placeholder="Enter your password"
+          />
 
           {error && <div className="error-message">{error}</div>}
           {success && <div className="success-message">{success}</div>}

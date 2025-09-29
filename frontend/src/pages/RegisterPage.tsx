@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FormGroup } from "../components/form";
 
 interface RegisterFormData {
   username: string;
@@ -96,47 +97,39 @@ export default function RegisterPage() {
         <h1>Create Account</h1>
 
         <form onSubmit={handleSubmit} className="register-form">
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-              placeholder="Enter your username"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-              placeholder="Confirm your password"
-            />
-          </div>
+          <FormGroup
+            type="text"
+            id="username"
+            name="username"
+            label="Username"
+            value={formData.username}
+            onChange={handleInputChange}
+            required
+            disabled={isLoading}
+            placeholder="Enter your username"
+          />
+          <FormGroup
+            type="password"
+            id="password"
+            name="password"
+            label="Password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+            disabled={isLoading}
+            placeholder="Enter your password"
+          />
+          <FormGroup
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            label="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+            required
+            disabled={isLoading}
+            placeholder="Confirm your password"
+          />
 
           {error && <div className="error-message">{error}</div>}
           {success && <div className="success-message">{success}</div>}
