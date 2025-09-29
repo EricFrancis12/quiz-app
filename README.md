@@ -1,4 +1,18 @@
-# Project 1 Summary and Requirements
+# Quiz App
+
+This application allows users to create, manage, and take interactive quizzes. Built with a Java Spring Boot backend and React TypeScript frontend, it offers a complete quiz management ecosystem. Users can register accounts, log in securely, and create custom quizzes with multiple-choice questions, which then can be shared via a URL. Quiz takers can then take the quiz by visiting the URL, and view their results when finished.
+
+## Quickstart
+
+```bash
+AUTH_SECRET_KEY="MY_SECRET_KEY" \
+POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
+POSTGRES_USERNAME="postgres" \
+POSTGRES_PASSWORD="dev" \
+mvn spring-boot:run
+```
+
+## Project 1 Summary and Requirements
 
 Build a fullstack application using Spring Boot & React. Back your data with a SQL database, expose with an HTTP API, and a webapp UI.
 
@@ -42,13 +56,3 @@ Optional Ideas:
 - Logging of the service layer
 - Test suites for the service layer
 - Logging out functionality
-
-## Quickstart
-
-```bash
-AUTH_SECRET_KEY="MY_SECRET_KEY" \
-POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
-POSTGRES_USERNAME="postgres" \
-POSTGRES_PASSWORD="dev" \
-mvn spring-boot:run
-```
