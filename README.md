@@ -4,55 +4,46 @@ This application allows users to create, manage, and take interactive quizzes. B
 
 ## Quickstart
 
+### Option 1: Run Via Docker Compose
+
+Run the following command to set your `AUTH_SECRET_KEY` environment variable (replace the value with your own secret key), and spin up the Spring Boot and Postgres containers:
+
 ```bash
-AUTH_SECRET_KEY="MY_SECRET_KEY" \
-POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
-POSTGRES_USERNAME="postgres" \
-POSTGRES_PASSWORD="dev" \
-mvn spring-boot:run
+AUTH_SECRET_KEY="[MY_SECRET_KEY]" docker compose up -d
 ```
 
-## Project 1 Summary and Requirements
+### Option 2: Build and Run Locally
 
-Build a fullstack application using Spring Boot & React. Back your data with a SQL database, expose with an HTTP API, and a webapp UI.
+1. Ceate a Docker volume for Postgres (only once):
 
-## Technology Requirements
+```bash
+docker volume create quiz-app-postgres
+```
 
-- Spring Boot
-- Spring Web, Spring JPA (or JDBC)
-- SQL (H2 embedded, Postgres, etc)
-- React
-- Maven
-- GitHub
+2. Spin up a Postgres container
 
-## Deadline & Presentation
+```bash
+docker run -d \
+  -p 5432:5432 \
+  -e POSTGRES_PASSWORD="[MY_PASSWORD]" \
+  -v quiz-app-postgres:/var/lib/postgresql/data \
+  postgres:17
+```
 
-- First Checkpoint: 9/26
-- Final Presentation: 10/10
+3. Install and build frontend
 
-## Example Project - Employee Reimbursement System
+```bash
+cd frontend && npm install && npm run build && cd ..
+```
 
-A system for employees to submit reimbursement tickets, and for managers to view and approve/deny them.
+4. Set environment variables and run Spring Boot app via Maven
 
-Employee Users can:
+```bash
+AUTH_SECRET_KEY="[MY_SECRET_KEY]" \
+POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
+POSTGRES_USERNAME="postgres" \
+POSTGRES_PASSWORD="[MY_PASSWORD]" \
+./mvnw spring-boot:run
+```
 
-- Create an account
-- Create a new Reimbursement
-- See their reimbursement tickets
-- See only pending reimbursement tickets
-- Edit a reimbursement ticket
-
-Manager Users can:
-
-- See all Reimbursements
-- See all pending Reimbursements
-- Resolve (approve/deny) a reimbursement
-- See all Users
-- Delete a User
-
-Optional Ideas:
-
-- Users who are not logged in can only attempt to log in or register for a new account
-- Logging of the service layer
-- Test suites for the service layer
-- Logging out functionality
+The application should now be available at http://localhost:8080
