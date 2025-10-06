@@ -14,35 +14,27 @@ AUTH_SECRET_KEY="[MY_SECRET_KEY]" docker compose up -d
 
 ### Option 2: Build and Run Locally
 
-1. Ceate a Docker volume for Postgres (only once):
-
-```bash
-docker volume create quiz-app-postgres
-```
-
-2. Spin up a Postgres container
+1. Spin up Postgres container
 
 ```bash
 docker run -d \
   -p 5432:5432 \
-  -e POSTGRES_PASSWORD="[MY_PASSWORD]" \
+  -e POSTGRES_PASSWORD="[MY_POSTGRES_PASSWORD]" \
   -v quiz-app-postgres:/var/lib/postgresql/data \
   postgres:17
 ```
 
-3. Install and build frontend
+2. Install and build frontend
 
 ```bash
 cd frontend && npm install && npm run build && cd ..
 ```
 
-4. Set environment variables and run Spring Boot app via Maven
+3. Set environment variables and run Spring Boot app
 
 ```bash
 AUTH_SECRET_KEY="[MY_SECRET_KEY]" \
-POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
-POSTGRES_USERNAME="postgres" \
-POSTGRES_PASSWORD="[MY_PASSWORD]" \
+POSTGRES_PASSWORD="[MY_POSTGRES_PASSWORD]" \
 ./mvnw spring-boot:run
 ```
 

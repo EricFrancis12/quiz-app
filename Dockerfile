@@ -22,12 +22,12 @@ COPY . .
 # Make mvnw executable
 RUN chmod +x ./mvnw
 
-# Download dependencies (this layer will be cached if pom.xml doesn't change)
+# Download Java dependencies (this layer will be cached if pom.xml doesn't change)
 RUN ./mvnw dependency:go-offline -B
 
 WORKDIR /app/frontend
 
-# Install dependencies from package.json
+# Clean install node.js dependencies
 RUN npm ci
 
 # Build the frontend
