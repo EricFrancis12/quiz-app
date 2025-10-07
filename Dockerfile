@@ -1,6 +1,5 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk-slim AS builder
 
-# Set working directory
 WORKDIR /app
 
 RUN apt-get update
@@ -38,7 +37,28 @@ WORKDIR /app
 # Build the backend
 RUN ./mvnw clean package -DskipTests
 
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Create a non-root user for security
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# Copy the JAR file from builder stage
+COPY --from=builder /app/backend/target/*.jar backend/app.jar
+
+# Copy the frontend dist folder from builder stage
+COPY --from=builder /app/frontend/dist/ ./frontend/dist/
+
+# Change ownership to appuser
+RUN chown -R appuser:appuser /app
+
+# Switch to non-root user
+USER appuser
+
+# Run in /app/backend instead of /app so relative path to frontend is correct
+WORKDIR /app/backend
+
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["./mvnw", "spring-boot:run"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
