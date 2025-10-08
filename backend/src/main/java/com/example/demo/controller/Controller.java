@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.APIResponse;
@@ -72,8 +73,14 @@ public class Controller {
     }
 
     @RequestMapping("/api/logout")
-    public ResponseEntity<APIResponse<String>> handleLogout(HttpServletResponse response) {
+    public ResponseEntity<APIResponse<String>> handleLogout(
+            @RequestParam(value = "redirect_to_login", defaultValue = "false") String redirectParam,
+            HttpServletResponse response) {
         authService.logout(response);
+        boolean redirectToLogin = "true".equalsIgnoreCase(redirectParam);
+        if (redirectToLogin) {
+            return APIResponse.redirect("/login", response);
+        }
         return APIResponse.ok("You have logged out");
     }
 

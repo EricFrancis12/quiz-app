@@ -3,6 +3,8 @@ package com.example.demo.dto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 public class APIResponse<T> {
 
     private boolean success;
@@ -33,6 +35,13 @@ public class APIResponse<T> {
 
     public static <T> ResponseEntity<APIResponse<T>> ok(T data) {
         return APIResponse.success(data).entity(HttpStatus.OK);
+    }
+
+    public static <T> ResponseEntity<APIResponse<T>> redirect(
+            String url, HttpServletResponse response) {
+        response.setStatus(HttpStatus.FOUND.value());
+        response.setHeader("Location", url);
+        return null;
     }
 
     public static <T> ResponseEntity<APIResponse<T>> badRequest() {
