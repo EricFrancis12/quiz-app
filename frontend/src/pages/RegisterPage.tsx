@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { FormGroup } from "../components/form";
 import { userSchema } from "../lib/schemas";
 import { useAPI } from "../hooks/useAPI";
+import {
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  MAX_USERNAME_LENGTH,
+  MIN_USERNAME_LENGTH,
+} from "../lib/constants";
 
 type RegisterFormData = {
   username: string;
@@ -43,20 +49,28 @@ export default function RegisterPage() {
       setError("Username is required");
       return false;
     }
-    if (formData.username.length < 3) {
-      setError("Username must be at least 3 characters");
+    if (formData.username.length < MIN_USERNAME_LENGTH) {
+      setError(`Username must be at least ${MIN_USERNAME_LENGTH} characters`);
+      return false;
+    }
+    if (formData.username.length > MAX_USERNAME_LENGTH) {
+      setError(
+        `Username can't be longer than ${MAX_USERNAME_LENGTH} characters`
+      );
       return false;
     }
     if (!formData.password) {
       setError("Password is required");
       return false;
     }
-    if (formData.password.length < 8) {
-      setError("Password must be at least 8 characters");
+    if (formData.password.length < MIN_PASSWORD_LENGTH) {
+      setError(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
       return false;
     }
-    if (formData.password.length > 64) {
-      setError("Password can't be longer than 64 characters");
+    if (formData.password.length > MAX_PASSWORD_LENGTH) {
+      setError(
+        `Password can't be longer than ${MAX_PASSWORD_LENGTH} characters`
+      );
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
