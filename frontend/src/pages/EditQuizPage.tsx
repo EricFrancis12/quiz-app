@@ -19,7 +19,7 @@ export default function EditQuizPage() {
   useEffect(() => {
     // TODO: It might be better if we had AppData available in a context,
     // and search thru that for the Quiz rather than having to re-fetch here.
-    const fetchQuiz = async () => {
+    async function fetchQuiz() {
       if (!quizId) return;
 
       try {
@@ -41,7 +41,7 @@ export default function EditQuizPage() {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchQuiz();
   }, [quizId]);
@@ -55,26 +55,26 @@ export default function EditQuizPage() {
     }
   }, [originalQuiz, editedQuiz]);
 
-  const updateQuizName = (name: string) => {
+  function updateQuizName(name: string) {
     if (editedQuiz) {
       setEditedQuiz({ ...editedQuiz, name });
     }
-  };
+  }
 
-  const updateQuestion = (questionIndex: number, text: string) => {
+  function updateQuestion(questionIndex: number, text: string) {
     if (editedQuiz) {
       const newQuestions = [...editedQuiz.questions];
       newQuestions[questionIndex] = { ...newQuestions[questionIndex], text };
       setEditedQuiz({ ...editedQuiz, questions: newQuestions });
     }
-  };
+  }
 
-  const updateChoice = (
+  function updateChoice(
     questionIndex: number,
     choiceIndex: number,
     field: keyof QuestionChoice,
     value: string | number
-  ) => {
+  ) {
     if (editedQuiz) {
       const newQuestions = [...editedQuiz.questions];
       const newChoices = [...newQuestions[questionIndex].choices];
@@ -85,9 +85,9 @@ export default function EditQuizPage() {
       };
       setEditedQuiz({ ...editedQuiz, questions: newQuestions });
     }
-  };
+  }
 
-  const addQuestion = () => {
+  function addQuestion() {
     if (editedQuiz) {
       const newQuestion: Question = {
         text: "",
@@ -98,18 +98,18 @@ export default function EditQuizPage() {
         questions: [...editedQuiz.questions, newQuestion],
       });
     }
-  };
+  }
 
-  const removeQuestion = (questionIndex: number) => {
+  function removeQuestion(questionIndex: number) {
     if (editedQuiz) {
       const newQuestions = editedQuiz.questions.filter(
         (_, index) => index !== questionIndex
       );
       setEditedQuiz({ ...editedQuiz, questions: newQuestions });
     }
-  };
+  }
 
-  const addChoice = (questionIndex: number) => {
+  function addChoice(questionIndex: number) {
     if (editedQuiz) {
       const newQuestions = [...editedQuiz.questions];
       const newChoice: QuestionChoice = {
@@ -120,9 +120,9 @@ export default function EditQuizPage() {
       newQuestions[questionIndex].choices.push(newChoice);
       setEditedQuiz({ ...editedQuiz, questions: newQuestions });
     }
-  };
+  }
 
-  const removeChoice = (questionIndex: number, choiceIndex: number) => {
+  function removeChoice(questionIndex: number, choiceIndex: number) {
     if (editedQuiz) {
       const newQuestions = [...editedQuiz.questions];
       newQuestions[questionIndex].choices = newQuestions[
@@ -130,21 +130,21 @@ export default function EditQuizPage() {
       ].choices.filter((_, index) => index !== choiceIndex);
       setEditedQuiz({ ...editedQuiz, questions: newQuestions });
     }
-  };
+  }
 
-  const updateResult = (
+  function updateResult(
     resultIndex: number,
     field: keyof QuizResult,
     value: string
-  ) => {
+  ) {
     if (editedQuiz) {
       const newResults = [...editedQuiz.results];
       newResults[resultIndex] = { ...newResults[resultIndex], [field]: value };
       setEditedQuiz({ ...editedQuiz, results: newResults });
     }
-  };
+  }
 
-  const addResult = () => {
+  async function addResult() {
     if (editedQuiz) {
       const newResult: QuizResult = { name: "", description: "" };
       setEditedQuiz({
@@ -152,18 +152,18 @@ export default function EditQuizPage() {
         results: [...editedQuiz.results, newResult],
       });
     }
-  };
+  }
 
-  const removeResult = (resultIndex: number) => {
+  function removeResult(resultIndex: number) {
     if (editedQuiz) {
       const newResults = editedQuiz.results.filter(
         (_, index) => index !== resultIndex
       );
       setEditedQuiz({ ...editedQuiz, results: newResults });
     }
-  };
+  }
 
-  const saveQuiz = async () => {
+  async function saveQuiz() {
     if (!editedQuiz || !hasChanges) return;
 
     try {
@@ -194,9 +194,9 @@ export default function EditQuizPage() {
     } finally {
       setSaving(false);
     }
-  };
+  }
 
-  const cancelEdit = () => {
+  function cancelEdit() {
     if (hasChanges) {
       if (
         confirm("You have unsaved changes. Are you sure you want to cancel?")
@@ -209,7 +209,7 @@ export default function EditQuizPage() {
     } else {
       navigate("/dashboard");
     }
-  };
+  }
 
   if (loading) {
     return (

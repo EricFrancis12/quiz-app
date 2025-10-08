@@ -17,7 +17,7 @@ export default function QuizPage() {
   const [finalResult, setFinalResult] = useState<QuizResult | null>(null);
 
   useEffect(() => {
-    const fetchQuiz = async () => {
+    async function fetchQuiz() {
       if (!quizId) return;
 
       try {
@@ -44,12 +44,12 @@ export default function QuizPage() {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchQuiz();
   }, [quizId]);
 
-  const handleAnswerSelect = (choiceIndex: number) => {
+  function handleAnswerSelect(choiceIndex: number) {
     if (!quiz) return;
 
     const currentQuestion = quiz.questions[currentQuestionIndex];
@@ -71,9 +71,9 @@ export default function QuizPage() {
     } else {
       completeQuiz(newResultScores);
     }
-  };
+  }
 
-  const completeQuiz = (finalScores: number[]) => {
+  function completeQuiz(finalScores: number[]) {
     if (!quiz) return;
 
     // Find the result with the highest score
@@ -90,15 +90,15 @@ export default function QuizPage() {
 
     setFinalResult(result);
     setQuizCompleted(true);
-  };
+  }
 
-  const resetQuiz = () => {
+  function resetQuiz() {
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
     setResultScores(quiz ? new Array(quiz.results.length).fill(0) : []);
     setQuizCompleted(false);
     setFinalResult(null);
-  };
+  }
 
   if (loading) {
     return <div>Loading quiz...</div>;

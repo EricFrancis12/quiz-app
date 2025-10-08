@@ -10,7 +10,7 @@ export default function DashboardPage() {
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
-    const fetchAppData = async () => {
+    async function fetchAppData() {
       try {
         const response = await fetch("/api/app-data", {
           method: "GET",
@@ -38,12 +38,12 @@ export default function DashboardPage() {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchAppData();
   }, []);
 
-  const deleteQuiz = async (quizId: number, quizName: string) => {
+  async function deleteQuiz(quizId: number, quizName: string) {
     if (!confirm(`Are you sure you want to delete "${quizName}"?`)) {
       return;
     }
@@ -73,9 +73,9 @@ export default function DashboardPage() {
     } finally {
       setDeleting(null);
     }
-  };
+  }
 
-  const createQuiz = async () => {
+  async function createQuiz() {
     try {
       setCreating(true);
 
@@ -102,7 +102,7 @@ export default function DashboardPage() {
     } finally {
       setCreating(false);
     }
-  };
+  }
 
   if (loading) {
     return <div>Loading...</div>;
