@@ -29,10 +29,7 @@ export default function RegisterPage() {
   );
   const [success, setSuccess] = useState("");
 
-  const { loading, error, setError, fetchData } = useAPI(
-    "/api/register",
-    userSchema
-  );
+  const { loading, error, setError, fetchData } = useAPI(userSchema);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -86,7 +83,7 @@ export default function RegisterPage() {
 
     setSuccess("");
 
-    const apiResponse = await fetchData({
+    const apiResponse = await fetchData("/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

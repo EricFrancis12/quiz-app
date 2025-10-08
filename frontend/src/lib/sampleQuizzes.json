@@ -1,0 +1,299 @@
+[
+  {
+    "id": -1,
+    "name": "What's Your Learning Style?",
+    "questions": [
+      {
+        "text": "When studying for an exam, what do you prefer to do?",
+        "choices": [
+          {
+            "text": "Read textbooks and take detailed notes",
+            "points": 2,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Watch videos and listen to lectures",
+            "points": 2,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Practice with hands-on exercises",
+            "points": 2,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Discuss concepts with study groups",
+            "points": 2,
+            "resultsIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you best remember information?",
+        "choices": [
+          {
+            "text": "Writing it down multiple times",
+            "points": 3,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Hearing it explained out loud",
+            "points": 3,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Creating diagrams or models",
+            "points": 3,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Teaching it to someone else",
+            "points": 3,
+            "resultsIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "In a classroom, you learn best when:",
+        "choices": [
+          {
+            "text": "Taking comprehensive notes",
+            "points": 1,
+            "resultsIndex": 0
+          },
+          {
+            "text": "The teacher speaks clearly and uses examples",
+            "points": 1,
+            "resultsIndex": 1
+          },
+          {
+            "text": "There are visual aids and demonstrations",
+            "points": 1,
+            "resultsIndex": 2
+          },
+          {
+            "text": "You can participate in discussions",
+            "points": 1,
+            "resultsIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Visual Learner",
+        "description": "You learn best through reading, writing, and visual materials. You prefer charts, diagrams, and written instructions."
+      },
+      {
+        "name": "Auditory Learner",
+        "description": "You learn best through listening and speaking. You prefer lectures, discussions, and verbal instructions."
+      },
+      {
+        "name": "Kinesthetic Learner",
+        "description": "You learn best through hands-on experience and movement. You prefer practical exercises and real-world applications."
+      },
+      {
+        "name": "Social Learner",
+        "description": "You learn best through interaction with others. You prefer group work, discussions, and collaborative activities."
+      }
+    ]
+  },
+  {
+    "id": -2,
+    "name": "Which Programming Language Suits You?",
+    "questions": [
+      {
+        "text": "What type of projects interest you most?",
+        "choices": [
+          {
+            "text": "Web applications and websites",
+            "points": 3,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Mobile apps",
+            "points": 3,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Data analysis and machine learning",
+            "points": 3,
+            "resultsIndex": 2
+          },
+          {
+            "text": "System programming and performance",
+            "points": 3,
+            "resultsIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you prefer to work?",
+        "choices": [
+          {
+            "text": "Quick prototyping and rapid development",
+            "points": 2,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Cross-platform solutions",
+            "points": 2,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Scientific computing and research",
+            "points": 2,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Low-level control and optimization",
+            "points": 2,
+            "resultsIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What's most important to you in a programming language?",
+        "choices": [
+          {
+            "text": "Flexibility and ease of use",
+            "points": 1,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Large ecosystem and community",
+            "points": 1,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Rich libraries for data science",
+            "points": 1,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Memory safety and performance",
+            "points": 1,
+            "resultsIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "JavaScript/TypeScript",
+        "description": "Perfect for web development! You'll love the flexibility and vast ecosystem. Great for both frontend and backend development."
+      },
+      {
+        "name": "Java/Kotlin",
+        "description": "Excellent choice for enterprise and mobile development! Strong typing, great tooling, and cross-platform capabilities."
+      },
+      {
+        "name": "Python",
+        "description": "Ideal for data science and rapid development! Simple syntax, powerful libraries, and great for AI/ML projects."
+      },
+      {
+        "name": "Rust/C++",
+        "description": "Perfect for systems programming! You value performance, memory safety, and low-level control over your applications."
+      }
+    ]
+  },
+  {
+    "id": -3,
+    "name": "What's Your Ideal Vacation?",
+    "questions": [
+      {
+        "text": "What sounds most appealing for a vacation?",
+        "choices": [
+          {
+            "text": "Hiking in national parks and camping",
+            "points": 3,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Exploring museums and historical sites",
+            "points": 3,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Relaxing on a tropical beach",
+            "points": 3,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Experiencing nightlife in a big city",
+            "points": 3,
+            "resultsIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you prefer to travel?",
+        "choices": [
+          {
+            "text": "Backpacking with minimal gear",
+            "points": 2,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Guided tours with planned itineraries",
+            "points": 2,
+            "resultsIndex": 1
+          },
+          {
+            "text": "All-inclusive resort packages",
+            "points": 2,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Spontaneous city exploration",
+            "points": 2,
+            "resultsIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What's your ideal vacation pace?",
+        "choices": [
+          {
+            "text": "Active and challenging",
+            "points": 1,
+            "resultsIndex": 0
+          },
+          {
+            "text": "Educational and enriching",
+            "points": 1,
+            "resultsIndex": 1
+          },
+          {
+            "text": "Peaceful and rejuvenating",
+            "points": 1,
+            "resultsIndex": 2
+          },
+          {
+            "text": "Exciting and social",
+            "points": 1,
+            "resultsIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Adventure Seeker",
+        "description": "You crave outdoor adventures and physical challenges! National parks, hiking trails, and wilderness camping are perfect for you."
+      },
+      {
+        "name": "Culture Enthusiast",
+        "description": "You love learning about history and different cultures! Museums, historical sites, and cultural tours will fascinate you."
+      },
+      {
+        "name": "Relaxation Lover",
+        "description": "You need peace and tranquility! Beach resorts, spas, and quiet retreats will help you recharge and unwind."
+      },
+      {
+        "name": "Urban Explorer",
+        "description": "You thrive in the energy of big cities! Nightlife, restaurants, shopping, and metropolitan culture excite you."
+      }
+    ]
+  }
+]

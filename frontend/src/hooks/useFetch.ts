@@ -12,7 +12,6 @@ export type FetchOptions<T> = {
 export type FetchDataOptions = RequestInit & { url?: string };
 
 export function useFetch<T>(
-  url: string,
   schema: z.ZodType<T>,
   {
     initialState,
@@ -25,7 +24,10 @@ export function useFetch<T>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function fetchData(options?: FetchDataOptions): Promise<T | null> {
+  async function fetchData(
+    url: string,
+    options?: FetchDataOptions
+  ): Promise<T | null> {
     if (loading) return null;
 
     setLoading(true);
@@ -67,10 +69,10 @@ export function useFetchOnMount<T>(
   schema: z.ZodType<T>,
   options: FetchOptions<T> = {}
 ) {
-  const obj = useFetch(url, schema, options);
+  const obj = useFetch(schema, options);
 
   useEffect(() => {
-    obj.fetchData();
+    obj.fetchData(url);
   });
 
   return obj;
