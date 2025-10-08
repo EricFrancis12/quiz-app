@@ -73,7 +73,7 @@ export function useFetchOnMount<T>(
 
   useEffect(() => {
     obj.fetchData(url);
-  });
+  }, []);
 
   return obj;
 }

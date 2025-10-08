@@ -20,7 +20,7 @@ export function useAPIOnMount<T>(
 
   useEffect(() => {
     obj.fetchData(url);
-  });
+  }, []);
 
   return obj;
 }

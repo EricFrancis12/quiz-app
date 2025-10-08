@@ -1,47 +1,11 @@
-import { useEffect, useState } from "react";
-import type { AppData } from "../lib/types";
+import { useState } from "react";
+import { useAppContext } from "../contexts/AppContext/useAppContext";
 
 export default function DashboardPage() {
-  const [data, setData] = useState<AppData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [unauthorized, setUnauthorized] = useState(false);
+  const { appData, fetchAppData } = useAppContext();
+
   const [deleting, setDeleting] = useState<number | null>(null);
   const [creating, setCreating] = useState(false);
-
-  useEffect(() => {
-    async function fetchAppData() {
-      try {
-        const response = await fetch("/api/app-data", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.status === 401) {
-          setUnauthorized(true);
-          setLoading(false);
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-
-        // TODO: create type guard function to validate AppData
-        const result = await response.json();
-        setData(result.data);
-        setError(null);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchAppData();
-  }, []);
 
   async function deleteQuiz(quizId: number, quizName: string) {
     if (!confirm(`Are you sure you want to delete "${quizName}"?`)) {
@@ -60,13 +24,8 @@ export default function DashboardPage() {
         throw new Error(`Failed to delete quiz: ${response.statusText}`);
       }
 
-      // Remove the deleted quiz from the local state
-      if (data) {
-        const updatedQuizzes = data.quizzes.filter(
-          (quiz) => quiz.id !== quizId
-        );
-        setData({ ...data, quizzes: updatedQuizzes });
-      }
+      // Refresh AppData because successfully removed a quiz
+      fetchAppData();
     } catch (err) {
       console.error("Error deleting quiz:", err);
       alert(`Failed to delete quiz "${quizName}". Please try again.`);
@@ -104,37 +63,13 @@ export default function DashboardPage() {
     }
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (unauthorized) {
-    return (
-      <div>
-        <h2>Unauthorized</h2>
-        <p>You need to login to access this page.</p>
-        <a href="/login">Go to Login</a>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>
-        <h2>Error</h2>
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()}>Retry</button>
-      </div>
-    );
-  }
-
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
       <h1>Dashboard</h1>
 
-      {data && (
+      {appData && (
         <div style={{ marginBottom: "30px" }}>
-          <h2>Welcome back, {data.username}!</h2>
+          <h2>Welcome back, {appData.username}!</h2>
         </div>
       )}
 
@@ -156,9 +91,9 @@ export default function DashboardPage() {
           {creating ? "Creating..." : "Create Quiz"}
         </button>
 
-        <h2>Your Quizzes ({data?.quizzes.length || 0})</h2>
+        <h2>Your Quizzes ({appData?.quizzes.length || 0})</h2>
 
-        {!data?.quizzes || data.quizzes.length === 0 ? (
+        {!appData?.quizzes || appData.quizzes.length === 0 ? (
           <div
             style={{
               textAlign: "center",
@@ -172,7 +107,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div style={{ display: "grid", gap: "20px" }}>
-            {data.quizzes.map((quiz) => (
+            {appData.quizzes.map((quiz) => (
               <div
                 key={quiz.id}
                 style={{
