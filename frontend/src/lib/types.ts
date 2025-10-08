@@ -21,8 +21,23 @@ export type QuizResult = {
   description: string;
 };
 
+export type User = {
+  id: number;
+  username: string;
+};
+
 export type AppData = {
   userId: number;
   username: string;
   quizzes: Quiz[];
 };
+
+export type APIResponse<T> =
+  | {
+      success: true;
+      data: T;
+    }
+  | {
+      success: false;
+      error: string;
+    };

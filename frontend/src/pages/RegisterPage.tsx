@@ -1,23 +1,34 @@
 import React, { useState } from "react";
 import { FormGroup } from "../components/form";
+import { userSchema } from "../lib/schemas";
+import { useAPI } from "../hooks/useAPI";
 
-interface RegisterFormData {
+type RegisterFormData = {
   username: string;
   password: string;
   confirmPassword: string;
-}
+};
 
-export default function RegisterPage() {
-  const [formData, setFormData] = useState<RegisterFormData>({
+function defaultRegisterFormData(): RegisterFormData {
+  return {
     username: "",
     password: "",
     confirmPassword: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  };
+}
+
+export default function RegisterPage() {
+  const [formData, setFormData] = useState<RegisterFormData>(
+    defaultRegisterFormData()
+  );
   const [success, setSuccess] = useState("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { loading, error, setError, fetchData } = useAPI(
+    "/api/register",
+    userSchema
+  );
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -25,9 +36,9 @@ export default function RegisterPage() {
     }));
     // Clear error when user starts typing
     if (error) setError("");
-  };
+  }
 
-  const validateForm = (): boolean => {
+  function validateForm(): boolean {
     if (!formData.username.trim()) {
       setError("Username is required");
       return false;
@@ -40,8 +51,12 @@ export default function RegisterPage() {
       setError("Password is required");
       return false;
     }
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return false;
+    }
+    if (formData.password.length > 64) {
+      setError("Password can't be longer than 64 characters");
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
@@ -49,47 +64,30 @@ export default function RegisterPage() {
       return false;
     }
     return true;
-  };
+  }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (loading || !validateForm()) return;
 
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-    setError("");
     setSuccess("");
 
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-        }),
-      });
+    const apiResponse = await fetchData({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: formData.username,
+        password: formData.password,
+      }),
+    });
 
-      if (response.ok) {
-        setSuccess("Registration successful! You can now log in.");
-        setFormData({
-          username: "",
-          password: "",
-          confirmPassword: "",
-        });
-      } else {
-        const errorData = await response.text();
-        setError(errorData || "Registration failed");
-      }
-    } catch (err) {
-      console.error("Registration error:", err);
-      setError("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (apiResponse?.success) {
+      setSuccess("Registration successful! You can now log in.");
+      setFormData(defaultRegisterFormData());
     }
-  };
+  }
 
   return (
     <div className="register-page">
@@ -105,7 +103,7 @@ export default function RegisterPage() {
             value={formData.username}
             onChange={handleInputChange}
             required
-            disabled={isLoading}
+            disabled={loading}
             placeholder="Enter your username"
           />
           <FormGroup
@@ -116,7 +114,7 @@ export default function RegisterPage() {
             value={formData.password}
             onChange={handleInputChange}
             required
-            disabled={isLoading}
+            disabled={loading}
             placeholder="Enter your password"
           />
           <FormGroup
@@ -127,15 +125,15 @@ export default function RegisterPage() {
             value={formData.confirmPassword}
             onChange={handleInputChange}
             required
-            disabled={isLoading}
+            disabled={loading}
             placeholder="Confirm your password"
           />
 
           {error && <div className="error-message">{error}</div>}
           {success && <div className="success-message">{success}</div>}
 
-          <button type="submit" disabled={isLoading} className="submit-button">
-            {isLoading ? "Creating Account..." : "Register"}
+          <button type="submit" disabled={loading} className="submit-button">
+            {loading ? "Creating Account..." : "Register"}
           </button>
         </form>
 

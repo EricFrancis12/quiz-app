@@ -39,3 +39,35 @@ POSTGRES_PASSWORD="[MY_POSTGRES_PASSWORD]" \
 ```
 
 The application should now be available at http://localhost:8080
+
+## Development
+
+Follow these steps to set up your development environment:
+
+1. Spin up Postgres container
+
+```bash
+docker run -d \
+  -p 5432:5432 \
+  -e POSTGRES_PASSWORD="dev" \
+  -v quiz-app-postgres-dev:/var/lib/postgresql/data \
+  postgres:17
+```
+
+2. Start Spring Boot application
+
+```bash
+AUTH_SECRET_KEY="MY_SECRET_KEY" \
+POSTGRES_URL="jdbc:postgresql://localhost:5432/postgres" \
+POSTGRES_USERNAME="postgres" \
+POSTGRES_PASSWORD="dev" \
+mvn spring-boot:run
+```
+
+3. Open a separate terminal window, cd into `frontend`, and run the dev server.
+
+```bash
+cd frontend && npm run dev
+```
+
+The frontend should be available at http://localhost:5173. Requests will be automatically proxied to the Spring Boot API, as defined in `frontend/vite.config.ts`.

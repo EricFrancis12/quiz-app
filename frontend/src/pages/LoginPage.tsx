@@ -1,21 +1,32 @@
 import React, { useState } from "react";
 import { FormGroup } from "../components/form";
+import { useAPI } from "../hooks/useAPI";
+import { userSchema } from "../lib/schemas";
 
-interface LoginFormData {
+type LoginFormData = {
   username: string;
   password: string;
+};
+
+function defaultLoginFormData(): LoginFormData {
+  return {
+    username: "",
+    password: "",
+  };
 }
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    username: "",
-    password: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState<LoginFormData>(
+    defaultLoginFormData()
+  );
   const [success, setSuccess] = useState("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { loading, error, setError, fetchData } = useAPI(
+    "/api/login",
+    userSchema
+  );
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -23,9 +34,9 @@ export default function LoginPage() {
     }));
     // Clear error when user starts typing
     if (error) setError("");
-  };
+  }
 
-  const validateForm = (): boolean => {
+  function validateForm(): boolean {
     if (!formData.username.trim()) {
       setError("Username is required");
       return false;
@@ -38,51 +49,39 @@ export default function LoginPage() {
       setError("Password is required");
       return false;
     }
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return false;
+    }
+    if (formData.password.length > 64) {
+      setError("Password can't be longer than 64 characters");
       return false;
     }
     return true;
-  };
+  }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (loading || !validateForm()) return;
 
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-    setError("");
     setSuccess("");
 
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-        }),
-      });
+    const apiResponse = await fetchData({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: formData.username,
+        password: formData.password,
+      }),
+    });
 
-      if (response.ok) {
-        setSuccess("You are now logged in!");
-        setFormData({
-          username: "",
-          password: "",
-        });
-      } else {
-        const errorData = await response.text();
-        setError(errorData || "Login failed");
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (apiResponse?.success) {
+      setSuccess("You are now logged in!");
+      setFormData(defaultLoginFormData());
     }
-  };
+  }
 
   return (
     <div className="login-page">
@@ -98,7 +97,7 @@ export default function LoginPage() {
             value={formData.username}
             onChange={handleInputChange}
             required
-            disabled={isLoading}
+            disabled={loading}
             placeholder="Enter your username"
           />
           <FormGroup
@@ -109,15 +108,15 @@ export default function LoginPage() {
             value={formData.password}
             onChange={handleInputChange}
             required
-            disabled={isLoading}
+            disabled={loading}
             placeholder="Enter your password"
           />
 
           {error && <div className="error-message">{error}</div>}
           {success && <div className="success-message">{success}</div>}
 
-          <button type="submit" disabled={isLoading} className="submit-button">
-            {isLoading ? "Logging in..." : "Login"}
+          <button type="submit" disabled={loading} className="submit-button">
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 

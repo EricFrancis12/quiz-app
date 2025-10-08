@@ -1,48 +1,56 @@
 import { useEffect, useState } from "react";
+import { z } from "zod";
 import { fmtErr } from "../lib/utils";
 
-type FetchOptions<T> = {
+export type FetchOptions<T> = {
   initialState?: T | null;
+  disableStatusCodeError?: boolean;
   onSuccess?: (data: T) => void;
   onError?: (err: Error) => void;
 };
 
+export type FetchDataOptions = RequestInit & { url?: string };
+
 export function useFetch<T>(
   url: string,
-  verify: (u: unknown) => u is T,
-  { initialState, onSuccess, onError }: FetchOptions<T> = {}
+  schema: z.ZodType<T>,
+  {
+    initialState,
+    disableStatusCodeError,
+    onSuccess,
+    onError,
+  }: FetchOptions<T> = {}
 ) {
   const [data, setData] = useState<T | null>(initialState ?? null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState("");
 
-  async function fetchData(
-    options?: RequestInit & { url?: string }
-  ): Promise<T | null> {
+  async function fetchData(options?: FetchDataOptions): Promise<T | null> {
     if (loading) return null;
 
     setLoading(true);
-    setError(null);
+    setError("");
 
     let fetchedData: T | null = null;
 
     try {
       const response = await fetch(options?.url || url, options);
-      if (!response.ok) {
+      if (!disableStatusCodeError && !response.ok) {
         throw new Error("Expected 200 OK, but got " + response.status);
       }
 
       const data = await response.json();
-      if (!verify(data)) {
+      const result = schema.safeParse(data);
+      if (!result.success) {
         throw new Error("Response data did not match expected format");
       }
 
-      fetchedData = data;
+      fetchedData = result.data;
       setData(fetchedData);
       if (onSuccess) onSuccess(fetchedData);
     } catch (err) {
       const error = fmtErr(err);
-      setError(error);
+      setError(error.message);
       if (onError) onError(error);
     } finally {
       setLoading(false);
@@ -51,19 +59,19 @@ export function useFetch<T>(
     return fetchedData;
   }
 
-  return { data, loading, error, fetchData };
+  return { data, setData, loading, error, setError, fetchData };
 }
 
 export function useFetchOnMount<T>(
   url: string,
-  verify: (u: unknown) => u is T,
+  schema: z.ZodType<T>,
   options: FetchOptions<T> = {}
 ) {
-  const { data, loading, error, fetchData } = useFetch(url, verify, options);
+  const obj = useFetch(url, schema, options);
 
   useEffect(() => {
-    fetchData();
+    obj.fetchData();
   });
 
-  return { data, loading, error, fetchData };
+  return obj;
 }
