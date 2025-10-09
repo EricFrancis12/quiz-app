@@ -7,6 +7,7 @@ import {
   MIN_PASSWORD_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "../lib/constants";
+import { Link } from "react-router-dom";
 
 type LoginFormData = {
   username: string;
@@ -125,7 +126,7 @@ export default function LoginPage() {
         </form>
 
         <div className="register-link">
-          Don't have an account? <a href="/register">Sign up here</a>
+          Don't have an account? <Link to="/register">Sign up here</Link>
         </div>
       </div>
     </div>

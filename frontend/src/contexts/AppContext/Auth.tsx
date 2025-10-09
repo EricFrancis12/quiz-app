@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useAppContext } from "./useAppContext";
+import { Link } from "react-router-dom";
 
 export default function Auth({ children }: { children: React.ReactNode }) {
   const { appData, loading, fetchAppData } = useAppContext();
@@ -15,7 +16,7 @@ export default function Auth({ children }: { children: React.ReactNode }) {
   if (!appData) {
     return (
       <div>
-        Unauthorized. Please log in: <a href="/login">Login</a>
+        Unauthorized. Please log in: <Link to="/login">Login</Link>
       </div>
     );
   }

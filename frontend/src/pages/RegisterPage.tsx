@@ -8,7 +8,7 @@ import {
   MAX_USERNAME_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "../lib/constants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type RegisterFormData = {
   username: string;
@@ -148,7 +148,7 @@ export default function RegisterPage() {
         </form>
 
         <div className="login-link">
-          Already have an account? <a href="/login">Sign in here</a>
+          Already have an account? <Link to="/login">Sign in here</Link>
         </div>
       </div>
     </div>
