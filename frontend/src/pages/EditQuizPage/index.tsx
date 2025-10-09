@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import type { Quiz } from "../lib/types";
-import { useAppContext } from "../contexts/AppContext/useAppContext";
-import { safeParseInt } from "../lib/utils";
-import { useAPI } from "../hooks/useAPI";
-import { quizSchema } from "../lib/schemas";
-import QuizEditor from "../components/QuizEditor";
+import type { Quiz } from "../../lib/types";
+import { useAppContext } from "../../contexts/AppContext/useAppContext";
+import { safeParseInt } from "../../lib/utils";
+import { useAPI } from "../../hooks/useAPI";
+import { quizSchema } from "../../lib/schemas";
+import QuizEditor from "../../components/QuizEditor";
+import sampleQuizzesData from "../../lib/sampleQuizzes.json";
+import { Overlay } from "../../components/overlay";
+import QuizSelector from "./SampleQuizSelector";
 
 export default function EditQuizPage() {
   const { quizId } = useParams();
@@ -15,8 +18,11 @@ export default function EditQuizPage() {
   const { fetchData: doSaveQuiz, loading: saving } = useAPI(quizSchema);
 
   const [error, setError] = useState<string | null>(null);
+  const [showSampleQuizModal, setShowSampleQuizModal] = useState(false);
 
   const [editedQuiz, setEditedQuiz] = useState<Quiz | null>(null);
+
+  const sampleQuizzes = sampleQuizzesData as Quiz[];
 
   useEffect(() => {
     if (quizId) {
@@ -54,6 +60,15 @@ export default function EditQuizPage() {
     });
   }
 
+  function loadSampleQuiz(sampleQuiz: Quiz) {
+    if (!editedQuiz) return;
+
+    const quizCopy = structuredClone(sampleQuiz);
+    quizCopy.id = editedQuiz.id;
+    setEditedQuiz(quizCopy);
+    setShowSampleQuizModal(false);
+  }
+
   if (error) {
     return (
       <div style={{ padding: "20px", textAlign: "center" }}>
@@ -79,7 +94,6 @@ export default function EditQuizPage() {
 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      {/* Header */}
       <div
         style={{
           marginBottom: "30px",
@@ -90,6 +104,19 @@ export default function EditQuizPage() {
       >
         <h1>Edit Quiz</h1>
         <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => setShowSampleQuizModal(true)}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#17a2b8",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Load Sample Quiz
+          </button>
           <button
             onClick={() => navigate("/dashboard")}
             style={{
@@ -122,7 +149,6 @@ export default function EditQuizPage() {
 
       <QuizEditor quiz={editedQuiz} setQuiz={setEditedQuiz} />
 
-      {/* Save/Cancel Footer */}
       <div
         style={{
           borderTop: "1px solid #ddd",
@@ -160,6 +186,12 @@ export default function EditQuizPage() {
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>
+
+      {showSampleQuizModal && (
+        <Overlay onCloseIntent={() => setShowSampleQuizModal(false)}>
+          <QuizSelector quizzes={sampleQuizzes} onClick={loadSampleQuiz} />
+        </Overlay>
+      )}
     </div>
   );
 }
