@@ -8,6 +8,7 @@ import {
   MAX_USERNAME_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "../lib/constants";
+import { useNavigate } from "react-router-dom";
 
 type RegisterFormData = {
   username: string;
@@ -24,10 +25,11 @@ function defaultRegisterFormData(): RegisterFormData {
 }
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<RegisterFormData>(
     defaultRegisterFormData()
   );
-  const [success, setSuccess] = useState("");
 
   const { loading, error, setError, fetchData } = useAPI(userSchema);
 
@@ -81,8 +83,6 @@ export default function RegisterPage() {
     e.preventDefault();
     if (loading || !validateForm()) return;
 
-    setSuccess("");
-
     const apiResponse = await fetchData("/api/register", {
       method: "POST",
       headers: {
@@ -95,8 +95,8 @@ export default function RegisterPage() {
     });
 
     if (apiResponse?.success) {
-      setSuccess("Registration successful! You can now log in.");
-      setFormData(defaultRegisterFormData());
+      alert("Registration successful! You can now log in.");
+      navigate("/login");
     }
   }
 
@@ -141,7 +141,6 @@ export default function RegisterPage() {
           />
 
           {error && <div className="error-message">{error}</div>}
-          {success && <div className="success-message">{success}</div>}
 
           <button type="submit" disabled={loading} className="submit-button">
             {loading ? "Creating Account..." : "Register"}
