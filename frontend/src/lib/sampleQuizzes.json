@@ -9,22 +9,22 @@
           {
             "text": "Read textbooks and take detailed notes",
             "points": 2,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Watch videos and listen to lectures",
             "points": 2,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Practice with hands-on exercises",
             "points": 2,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Discuss concepts with study groups",
             "points": 2,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       },
@@ -34,22 +34,22 @@
           {
             "text": "Writing it down multiple times",
             "points": 3,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Hearing it explained out loud",
             "points": 3,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Creating diagrams or models",
             "points": 3,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Teaching it to someone else",
             "points": 3,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       },
@@ -59,22 +59,22 @@
           {
             "text": "Taking comprehensive notes",
             "points": 1,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "The teacher speaks clearly and uses examples",
             "points": 1,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "There are visual aids and demonstrations",
             "points": 1,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "You can participate in discussions",
             "points": 1,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       }
@@ -108,22 +108,22 @@
           {
             "text": "Web applications and websites",
             "points": 3,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Mobile apps",
             "points": 3,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Data analysis and machine learning",
             "points": 3,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "System programming and performance",
             "points": 3,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       },
@@ -133,22 +133,22 @@
           {
             "text": "Quick prototyping and rapid development",
             "points": 2,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Cross-platform solutions",
             "points": 2,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Scientific computing and research",
             "points": 2,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Low-level control and optimization",
             "points": 2,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       },
@@ -158,22 +158,22 @@
           {
             "text": "Flexibility and ease of use",
             "points": 1,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Large ecosystem and community",
             "points": 1,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Rich libraries for data science",
             "points": 1,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Memory safety and performance",
             "points": 1,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       }
@@ -207,22 +207,22 @@
           {
             "text": "Hiking in national parks and camping",
             "points": 3,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Exploring museums and historical sites",
             "points": 3,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Relaxing on a tropical beach",
             "points": 3,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Experiencing nightlife in a big city",
             "points": 3,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       },
@@ -232,22 +232,22 @@
           {
             "text": "Backpacking with minimal gear",
             "points": 2,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Guided tours with planned itineraries",
             "points": 2,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "All-inclusive resort packages",
             "points": 2,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Spontaneous city exploration",
             "points": 2,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       },
@@ -257,22 +257,22 @@
           {
             "text": "Active and challenging",
             "points": 1,
-            "resultsIndex": 0
+            "resultIndex": 0
           },
           {
             "text": "Educational and enriching",
             "points": 1,
-            "resultsIndex": 1
+            "resultIndex": 1
           },
           {
             "text": "Peaceful and rejuvenating",
             "points": 1,
-            "resultsIndex": 2
+            "resultIndex": 2
           },
           {
             "text": "Exciting and social",
             "points": 1,
-            "resultsIndex": 3
+            "resultIndex": 3
           }
         ]
       }

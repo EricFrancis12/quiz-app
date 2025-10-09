@@ -11,7 +11,7 @@ import type {
 export const questionChoiceSchema: z.ZodType<QuestionChoice> = z.object({
   text: z.string(),
   points: z.number(),
-  resultsIndex: z.number().int(),
+  resultIndex: z.number().int(),
 });
 
 export const questionSchema: z.ZodType<Question> = z.object({

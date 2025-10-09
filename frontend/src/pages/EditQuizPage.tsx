@@ -1,59 +1,37 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Quiz, QuizResult, Question, QuestionChoice } from "../lib/types";
+import { useAppContext } from "../contexts/AppContext/useAppContext";
+import { safeParseInt } from "../lib/utils";
+import { useAPI } from "../hooks/useAPI";
+import { quizSchema } from "../lib/schemas";
 
 export default function EditQuizPage() {
   const { quizId } = useParams();
   const navigate = useNavigate();
 
-  // Original quiz data
-  const [originalQuiz, setOriginalQuiz] = useState<Quiz | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { appData, fetchAppData } = useAppContext();
+  const { fetchData: doSaveQuiz, loading: saving } = useAPI(quizSchema);
+
   const [error, setError] = useState<string | null>(null);
 
-  // Editable quiz data
   const [editedQuiz, setEditedQuiz] = useState<Quiz | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
-    // TODO: It might be better if we had AppData available in a context,
-    // and search thru that for the Quiz rather than having to re-fetch here.
-    async function fetchQuiz() {
-      if (!quizId) return;
-
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/quizzes/${quizId}`);
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch quiz: ${response.statusText}`);
+    if (quizId) {
+      const quizIdInt = safeParseInt(quizId);
+      if (quizIdInt != null) {
+        const foundQuiz = appData?.quizzes.find(({ id }) => id === quizIdInt);
+        if (foundQuiz) {
+          setEditedQuiz(structuredClone(foundQuiz));
+          return;
         }
-
-        const quiz = (await response.json()).data;
-        setOriginalQuiz(quiz);
-        setEditedQuiz(JSON.parse(JSON.stringify(quiz))); // Deep copy for editing
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-        console.error("Error fetching quiz:", err);
-      } finally {
-        setLoading(false);
       }
     }
 
-    fetchQuiz();
-  }, [quizId]);
-
-  // Check for changes whenever editedQuiz changes
-  useEffect(() => {
-    if (originalQuiz && editedQuiz) {
-      const hasChanges =
-        JSON.stringify(originalQuiz) !== JSON.stringify(editedQuiz);
-      setHasChanges(hasChanges);
-    }
-  }, [originalQuiz, editedQuiz]);
+    setEditedQuiz(null);
+    setError("Quiz not found");
+  }, [quizId, appData?.quizzes]);
 
   function updateQuizName(name: string) {
     if (editedQuiz) {
@@ -91,7 +69,7 @@ export default function EditQuizPage() {
     if (editedQuiz) {
       const newQuestion: Question = {
         text: "",
-        choices: [{ text: "", points: 1, resultsIndex: 0 }],
+        choices: [{ text: "", points: 1, resultIndex: 0 }],
       };
       setEditedQuiz({
         ...editedQuiz,
@@ -115,7 +93,7 @@ export default function EditQuizPage() {
       const newChoice: QuestionChoice = {
         text: "",
         points: 1,
-        resultsIndex: 0,
+        resultIndex: 0,
       };
       newQuestions[questionIndex].choices.push(newChoice);
       setEditedQuiz({ ...editedQuiz, questions: newQuestions });
@@ -164,59 +142,23 @@ export default function EditQuizPage() {
   }
 
   async function saveQuiz() {
-    if (!editedQuiz || !hasChanges) return;
+    if (!editedQuiz) return;
 
-    try {
-      setSaving(true);
-      const response = await fetch(`/api/quizzes/${quizId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(editedQuiz),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to save quiz: ${response.statusText}`);
+    doSaveQuiz(`/api/quizzes/${quizId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(editedQuiz),
+    }).then((apiResponse) => {
+      if (apiResponse?.success) {
+        fetchAppData();
+        alert("Quiz saved successfully!");
+      } else {
+        alert("Failed to save quiz. Please try again.");
       }
-
-      const savedQuiz = await response.json();
-      setOriginalQuiz(savedQuiz);
-      setEditedQuiz(savedQuiz);
-      setHasChanges(false);
-
-      // Show success message or redirect
-      alert("Quiz saved successfully!");
-    } catch (err) {
-      console.error("Error saving quiz:", err);
-      alert("Failed to save quiz. Please try again.");
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  function cancelEdit() {
-    if (hasChanges) {
-      if (
-        confirm("You have unsaved changes. Are you sure you want to cancel?")
-      ) {
-        setEditedQuiz(
-          originalQuiz ? JSON.parse(JSON.stringify(originalQuiz)) : null
-        );
-        setHasChanges(false);
-      }
-    } else {
-      navigate("/dashboard");
-    }
-  }
-
-  if (loading) {
-    return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        Loading quiz...
-      </div>
-    );
+    });
   }
 
   if (error) {
@@ -256,7 +198,7 @@ export default function EditQuizPage() {
         <h1>Edit Quiz</h1>
         <div style={{ display: "flex", gap: "10px" }}>
           <button
-            onClick={cancelEdit}
+            onClick={() => navigate("/dashboard")}
             style={{
               padding: "10px 20px",
               backgroundColor: "#6c757d",
@@ -270,35 +212,20 @@ export default function EditQuizPage() {
           </button>
           <button
             onClick={saveQuiz}
-            disabled={!hasChanges || saving}
+            disabled={saving}
             style={{
               padding: "10px 20px",
-              backgroundColor: hasChanges ? "#28a745" : "#ccc",
+              backgroundColor: "#28a745",
               color: "white",
               border: "none",
               borderRadius: "4px",
-              cursor: hasChanges ? "pointer" : "not-allowed",
+              cursor: "pointer",
             }}
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
         </div>
       </div>
-
-      {hasChanges && (
-        <div
-          style={{
-            padding: "10px",
-            marginBottom: "20px",
-            backgroundColor: "#fff3cd",
-            border: "1px solid #ffeaa7",
-            borderRadius: "4px",
-            color: "#856404",
-          }}
-        >
-          You have unsaved changes
-        </div>
-      )}
 
       {/* Quiz Name */}
       <div style={{ marginBottom: "30px" }}>
@@ -481,12 +408,12 @@ export default function EditQuizPage() {
                     Result:
                   </label>
                   <select
-                    value={choice.resultsIndex}
+                    value={choice.resultIndex}
                     onChange={(e) =>
                       updateChoice(
                         questionIndex,
                         choiceIndex,
-                        "resultsIndex",
+                        "resultIndex",
                         parseInt(e.target.value)
                       )
                     }
@@ -634,7 +561,7 @@ export default function EditQuizPage() {
         }}
       >
         <button
-          onClick={cancelEdit}
+          onClick={() => navigate("/dashboard")}
           style={{
             padding: "12px 24px",
             backgroundColor: "#6c757d",
@@ -648,14 +575,14 @@ export default function EditQuizPage() {
         </button>
         <button
           onClick={saveQuiz}
-          disabled={!hasChanges || saving}
+          disabled={saving}
           style={{
             padding: "12px 24px",
-            backgroundColor: hasChanges ? "#28a745" : "#ccc",
+            backgroundColor: "#28a745",
             color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: hasChanges ? "pointer" : "not-allowed",
+            cursor: "pointer",
           }}
         >
           {saving ? "Saving..." : "Save Changes"}

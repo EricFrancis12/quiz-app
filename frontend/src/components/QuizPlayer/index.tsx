@@ -26,7 +26,7 @@ export default function QuizPlayer({ quiz }: { quiz: Quiz }) {
 
     // Update result scores based on the selected choice
     const newResultScores = [...resultScores];
-    newResultScores[selectedChoice.resultsIndex] += selectedChoice.points;
+    newResultScores[selectedChoice.resultIndex] += selectedChoice.points;
     setResultScores(newResultScores);
 
     // Move to next question or complete quiz

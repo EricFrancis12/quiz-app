@@ -13,7 +13,7 @@ export type Question = {
 export type QuestionChoice = {
   text: string;
   points: number;
-  resultsIndex: number;
+  resultIndex: number;
 };
 
 export type QuizResult = {
