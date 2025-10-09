@@ -1,10 +1,8 @@
-import type { Quiz } from "../../lib/types";
-
 export default function QuizNameEditor({
-  quiz,
+  quizName,
   onUpdate,
 }: {
-  quiz: Quiz;
+  quizName: string;
   onUpdate: (name: string) => void;
 }) {
   return (
@@ -12,7 +10,7 @@ export default function QuizNameEditor({
       <h2>Quiz Name</h2>
       <input
         type="text"
-        value={quiz.name}
+        value={quizName}
         onChange={(e) => onUpdate(e.target.value)}
         style={{
           width: "100%",
