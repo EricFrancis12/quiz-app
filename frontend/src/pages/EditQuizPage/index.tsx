@@ -98,12 +98,26 @@ export default function EditQuizPage() {
         style={{
           marginBottom: "30px",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
         <h1>Edit Quiz</h1>
         <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => navigate("/dashboard")}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#6c757d",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Back to Dashboard
+          </button>
           <button
             onClick={() => setShowSampleQuizModal(true)}
             style={{
@@ -116,19 +130,6 @@ export default function EditQuizPage() {
             }}
           >
             Load Sample Quiz
-          </button>
-          <button
-            onClick={() => navigate("/dashboard")}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Cancel
           </button>
           <button
             onClick={saveQuiz}
@@ -169,7 +170,7 @@ export default function EditQuizPage() {
             cursor: "pointer",
           }}
         >
-          Cancel
+          Back to Dashboard
         </button>
         <button
           onClick={saveQuiz}
