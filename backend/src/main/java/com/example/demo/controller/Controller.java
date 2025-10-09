@@ -102,7 +102,7 @@ public class Controller {
 
     @Auth
     @PostMapping("/api/quizzes")
-    public ResponseEntity<APIResponse<Quiz>> handleInsertQuiz(
+    public ResponseEntity<APIResponse<Quiz>> handleCreateQuiz(
             @RequestBody Quiz quiz, HttpServletRequest request) {
         long userId = authService.verify(request).getUserId();
         Quiz newQuiz = new Quiz(userId, quiz.getName(), quiz.getQuestions(), quiz.getResults());

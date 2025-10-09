@@ -1,66 +1,47 @@
-import { useState } from "react";
+import { z } from "zod";
 import { useAppContext } from "../contexts/AppContext/useAppContext";
+import { useAPI } from "../hooks/useAPI";
+import { quizSchema } from "../lib/schemas";
 
 export default function DashboardPage() {
   const { appData, fetchAppData } = useAppContext();
 
-  const [deleting, setDeleting] = useState<number | null>(null);
-  const [creating, setCreating] = useState(false);
+  const { loading: deleting, fetchData: doDeleteQuiz } = useAPI(z.number());
+  const { loading: creating, fetchData: doCreateQuiz } = useAPI(quizSchema);
 
   async function deleteQuiz(quizId: number, quizName: string) {
     if (!confirm(`Are you sure you want to delete "${quizName}"?`)) {
       return;
     }
 
-    try {
-      setDeleting(quizId);
-
-      const response = await fetch(`/api/quizzes/${quizId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete quiz: ${response.statusText}`);
+    doDeleteQuiz(`/api/quizzes/${quizId}`, {
+      method: "DELETE",
+      credentials: "include",
+    }).then((apiResponse) => {
+      if (apiResponse?.success) {
+        fetchAppData();
+      } else {
+        alert(`Failed to delete quiz "${quizName}". Please try again.`);
       }
-
-      // Refresh AppData because successfully removed a quiz
-      fetchAppData();
-    } catch (err) {
-      console.error("Error deleting quiz:", err);
-      alert(`Failed to delete quiz "${quizName}". Please try again.`);
-    } finally {
-      setDeleting(null);
-    }
+    });
   }
 
   async function createQuiz() {
-    try {
-      setCreating(true);
-
-      const response = await fetch("/api/quizzes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ name: "" }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to create quiz: ${response.statusText}`);
+    doCreateQuiz("/api/quizzes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ name: "" }),
+    }).then((apiResponse) => {
+      if (apiResponse?.success) {
+        // Redirect to edit page for the new quiz
+        window.location.href = `/quiz/${apiResponse.data.id}/edit`;
+      } else {
+        alert(`Failed to create new quiz. Please try again.`);
       }
-
-      const createdQuiz = (await response.json()).data;
-
-      // Redirect to edit page for the new quiz
-      window.location.href = `/quiz/${createdQuiz.id}/edit`;
-    } catch (err) {
-      console.error("Error creating quiz:", err);
-      alert("Failed to create quiz. Please try again.");
-    } finally {
-      setCreating(false);
-    }
+    });
   }
 
   return (
@@ -259,20 +240,18 @@ export default function DashboardPage() {
                     </a>
                     <button
                       onClick={() => deleteQuiz(quiz.id, quiz.name)}
-                      disabled={deleting === quiz.id}
+                      disabled={deleting}
                       style={{
                         padding: "8px 16px",
-                        backgroundColor:
-                          deleting === quiz.id ? "#ccc" : "#f44336",
+                        backgroundColor: "#f44336",
                         color: "white",
                         border: "none",
                         borderRadius: "4px",
-                        cursor:
-                          deleting === quiz.id ? "not-allowed" : "pointer",
+                        cursor: deleting ? "not-allowed" : "pointer",
                         fontSize: "14px",
                       }}
                     >
-                      {deleting === quiz.id ? "Deleting..." : "Delete"}
+                      Delete
                     </button>
                   </div>
                 </div>

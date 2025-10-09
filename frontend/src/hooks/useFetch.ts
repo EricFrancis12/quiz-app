@@ -9,8 +9,6 @@ export type FetchOptions<T> = {
   onError?: (err: Error) => void;
 };
 
-export type FetchDataOptions = RequestInit & { url?: string };
-
 export function useFetch<T>(
   schema: z.ZodType<T>,
   {
@@ -26,7 +24,7 @@ export function useFetch<T>(
 
   async function fetchData(
     url: string,
-    options?: FetchDataOptions
+    options?: RequestInit
   ): Promise<T | null> {
     if (loading) return null;
 
@@ -36,7 +34,7 @@ export function useFetch<T>(
     let fetchedData: T | null = null;
 
     try {
-      const response = await fetch(options?.url || url, options);
+      const response = await fetch(url, options);
       if (!disableStatusCodeError && !response.ok) {
         throw new Error("Expected 200 OK, but got " + response.status);
       }
