@@ -36,6 +36,7 @@ export default function QuizPage() {
     }
 
     fetchData(`/api/quizzes/${quizIdInt}`).then((apiResponse) => {
+      console.log(apiResponse);
       if (!apiResponse) {
         setError("Unable to fetch from API");
         return;
@@ -45,6 +46,8 @@ export default function QuizPage() {
         setError(apiResponse.error);
         return;
       }
+
+      setQuiz(apiResponse.data);
     });
   }, [quizId]);
 

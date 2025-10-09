@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Quiz } from "../../lib/types";
 import { useAppContext } from "../../contexts/AppContext/useAppContext";
 import { safeParseInt } from "../../lib/utils";
@@ -147,6 +147,24 @@ export default function EditQuizPage() {
           </button>
         </div>
       </div>
+
+      <Link
+        to={`/quiz/${editedQuiz.id}`}
+        target="_blank"
+        style={{
+          display: "inline-block",
+          padding: "10px 20px",
+          backgroundColor: "#ffc107",
+          color: "#212529",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+          fontWeight: "500",
+          textDecoration: "none",
+        }}
+      >
+        Preview Quiz
+      </Link>
 
       <QuizEditor quiz={editedQuiz} setQuiz={setEditedQuiz} />
 
