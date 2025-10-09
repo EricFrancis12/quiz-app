@@ -35,7 +35,6 @@ export default function QuizCarousel({
 
   return (
     <div style={{ position: "relative", padding: "1rem 0" }}>
-      {/* Carousel Container */}
       <div
         style={{
           display: "flex",
@@ -43,7 +42,7 @@ export default function QuizCarousel({
           gap: "1rem",
         }}
       >
-        <CarouselButton text="<-" onClick={prevSlide} />
+        <CarouselButton text="←" onClick={prevSlide} />
 
         <div
           style={{
@@ -53,23 +52,33 @@ export default function QuizCarousel({
             overflow: "hidden",
           }}
         >
-          {quizzes.map((quiz, index) => (
-            <div
-              key={quiz.id}
-              style={{
-                position: "absolute",
-                left: `${(index - currentIndex) * 280}px`,
-                transition: "left 0.5s ease-in-out",
-                width: "250px",
-                height: "100%",
-              }}
-            >
-              <QuizCard quiz={quiz} onClick={() => onQuizClick?.(quiz)} />
-            </div>
-          ))}
+          <div
+            style={{
+              position: "absolute",
+              left: `${-currentIndex * 270}px`,
+              transition: "left 0.5s ease-in-out",
+              display: "flex",
+              gap: "20px",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            {quizzes.map((quiz) => (
+              <div
+                key={quiz.id}
+                style={{
+                  width: "250px",
+                  height: "90%",
+                  flexShrink: 0,
+                }}
+              >
+                <QuizCard quiz={quiz} onClick={() => onQuizClick?.(quiz)} />
+              </div>
+            ))}
+          </div>
         </div>
 
-        <CarouselButton text="->" onClick={nextSlide} />
+        <CarouselButton text="→" onClick={nextSlide} />
       </div>
     </div>
   );
@@ -112,15 +121,20 @@ function QuizCard({ quiz, onClick }: { quiz: Quiz; onClick?: () => void }) {
     <div
       onClick={onClick}
       style={{
-        flex: "0 0 calc(33.333% - 1rem)",
-        minWidth: "250px",
-        padding: "1.5rem",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+        padding: "0 1.5rem 20px",
         backgroundColor: "#fff",
         borderRadius: "12px",
         border: "1px solid #e9ecef",
         cursor: onClick ? "pointer" : "default",
         transition: "all 0.2s",
         boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        boxSizing: "border-box",
       }}
       onMouseOver={(e) => {
         if (onClick) {
@@ -146,35 +160,38 @@ function QuizCard({ quiz, onClick }: { quiz: Quiz; onClick?: () => void }) {
         {quiz.name}
       </h3>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          fontSize: "0.9rem",
-          color: "#666",
-          marginBottom: "1rem",
-        }}
-      >
-        <span>{quiz.questions.length} questions</span>
-        <span>{quiz.results.length} results</span>
-      </div>
-
-      {onClick && (
+      <div>
         <div
           style={{
-            padding: "0.5rem 1rem",
-            backgroundColor: "#007bff",
-            color: "white",
-            borderRadius: "6px",
-            textAlign: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             fontSize: "0.9rem",
-            fontWeight: "500",
+            color: "#666",
+            marginBottom: "1rem",
+            width: "100%",
           }}
         >
-          Take Quiz
+          <span>{quiz.questions.length} questions</span>
+          <span>{quiz.results.length} results</span>
         </div>
-      )}
+
+        {onClick && (
+          <div
+            style={{
+              padding: "0.5rem 1rem",
+              backgroundColor: "#007bff",
+              color: "white",
+              borderRadius: "6px",
+              textAlign: "center",
+              fontSize: "0.9rem",
+              fontWeight: "500",
+            }}
+          >
+            Take Quiz
+          </div>
+        )}
+      </div>
     </div>
   );
 }
