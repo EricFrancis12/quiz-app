@@ -3,8 +3,11 @@ import { useAppContext } from "../../contexts/AppContext/useAppContext";
 import { useAPI } from "../../hooks/useAPI";
 import { quizSchema } from "../../lib/schemas";
 import QuizList from "./QuizList";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
+
   const { appData, fetchAppData } = useAppContext();
 
   const { loading: deleting, fetchData: doDeleteQuiz } = useAPI(z.number());
@@ -37,8 +40,7 @@ export default function DashboardPage() {
       body: JSON.stringify({ name: "" }),
     }).then((apiResponse) => {
       if (apiResponse?.success) {
-        // Redirect to edit page for the new quiz
-        window.location.href = `/quiz/${apiResponse.data.id}/edit`;
+        navigate(`/quiz/${apiResponse.data.id}/edit`);
       } else {
         alert(`Failed to create new quiz. Please try again.`);
       }
