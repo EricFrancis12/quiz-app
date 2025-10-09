@@ -9,24 +9,14 @@ export default function QuizCarousel({
   onQuizClick?: (quiz: Quiz) => void;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerView = 3;
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) =>
-      prev + itemsPerView >= quizzes.length ? 0 : prev + 1
-    );
-  };
+  function nextSlide() {
+    setCurrentIndex((index) => (index < quizzes.length - 1 ? index + 1 : 0));
+  }
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? Math.max(0, quizzes.length - itemsPerView) : prev - 1
-    );
-  };
-
-  const visibleQuizzes = quizzes.slice(
-    currentIndex,
-    currentIndex + itemsPerView
-  );
+  function prevSlide() {
+    setCurrentIndex((index) => (index === 0 ? quizzes.length - 1 : index - 1));
+  }
 
   if (quizzes.length === 0) {
     return (
@@ -53,141 +43,67 @@ export default function QuizCarousel({
           gap: "1rem",
         }}
       >
-        {/* Previous Button */}
-        <button
-          onClick={prevSlide}
-          disabled={currentIndex === 0}
-          style={{
-            padding: "0.75rem",
-            backgroundColor: currentIndex === 0 ? "#e9ecef" : "#007bff",
-            color: currentIndex === 0 ? "#6c757d" : "white",
-            border: "none",
-            borderRadius: "50%",
-            cursor: currentIndex === 0 ? "not-allowed" : "pointer",
-            fontSize: "1.2rem",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "all 0.2s",
-            flexShrink: 0,
-          }}
-        >
-          ‹
-        </button>
+        <CarouselButton text="<-" onClick={prevSlide} />
 
-        {/* Quiz Cards Container */}
         <div
           style={{
-            display: "flex",
-            gap: "1rem",
-            overflow: "hidden",
+            position: "relative",
             flex: 1,
-            minHeight: "200px",
+            height: "200px",
+            overflow: "hidden",
           }}
         >
-          {visibleQuizzes.map((quiz, index) => (
-            <QuizCard
-              key={`${quiz.id}-${currentIndex + index}`}
-              quiz={quiz}
-              onClick={() => onQuizClick?.(quiz)}
-            />
-          ))}
-
-          {/* Fill empty slots if not enough quizzes */}
-          {visibleQuizzes.length < itemsPerView &&
-            Array.from({ length: itemsPerView - visibleQuizzes.length }).map(
-              (_, index) => (
-                <div
-                  key={`empty-${index}`}
-                  style={{
-                    flex: "0 0 calc(33.333% - 1rem)",
-                    minWidth: "250px",
-                    height: "180px",
-                    backgroundColor: "#f8f9fa",
-                    borderRadius: "12px",
-                    border: "2px dashed #dee2e6",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#6c757d",
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  Empty slot
-                </div>
-              )
-            )}
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={nextSlide}
-          disabled={currentIndex + itemsPerView >= quizzes.length}
-          style={{
-            padding: "0.75rem",
-            backgroundColor:
-              currentIndex + itemsPerView >= quizzes.length
-                ? "#e9ecef"
-                : "#007bff",
-            color:
-              currentIndex + itemsPerView >= quizzes.length
-                ? "#6c757d"
-                : "white",
-            border: "none",
-            borderRadius: "50%",
-            cursor:
-              currentIndex + itemsPerView >= quizzes.length
-                ? "not-allowed"
-                : "pointer",
-            fontSize: "1.2rem",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "all 0.2s",
-            flexShrink: 0,
-          }}
-        >
-          ›
-        </button>
-      </div>
-
-      {/* Dots Indicator */}
-      {quizzes.length > itemsPerView && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "0.5rem",
-            marginTop: "1rem",
-          }}
-        >
-          {Array.from({
-            length: Math.ceil(quizzes.length / itemsPerView),
-          }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index * itemsPerView)}
+          {quizzes.map((quiz, index) => (
+            <div
+              key={quiz.id}
               style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-                border: "none",
-                backgroundColor:
-                  index === Math.floor(currentIndex / itemsPerView)
-                    ? "#007bff"
-                    : "#dee2e6",
-                cursor: "pointer",
-                transition: "background-color 0.2s",
+                position: "absolute",
+                left: `${(index - currentIndex) * 280}px`,
+                transition: "left 0.5s ease-in-out",
+                width: "250px",
+                height: "100%",
               }}
-            />
+            >
+              <QuizCard quiz={quiz} onClick={() => onQuizClick?.(quiz)} />
+            </div>
           ))}
         </div>
-      )}
+
+        <CarouselButton text="->" onClick={nextSlide} />
+      </div>
     </div>
+  );
+}
+
+function CarouselButton({
+  text,
+  onClick,
+}: {
+  text: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        padding: "0.75rem",
+        backgroundColor: "#007bff",
+        color: "white",
+        border: "none",
+        borderRadius: "50%",
+        cursor: "pointer",
+        fontSize: "1.2rem",
+        width: "50px",
+        height: "50px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        transition: "all 0.2s",
+        flexShrink: 0,
+      }}
+    >
+      {text}
+    </button>
   );
 }
 
@@ -227,7 +143,7 @@ function QuizCard({ quiz, onClick }: { quiz: Quiz; onClick?: () => void }) {
           fontWeight: "600",
         }}
       >
-        {quiz.name || "Untitled Quiz"}
+        {quiz.name}
       </h3>
 
       <div
