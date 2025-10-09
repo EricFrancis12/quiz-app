@@ -295,5 +295,698 @@
         "description": "You thrive in the energy of big cities! Nightlife, restaurants, shopping, and metropolitan culture excite you."
       }
     ]
+  },
+  {
+    "id": -4,
+    "name": "What's Your Dream Career?",
+    "questions": [
+      {
+        "text": "What motivates you most at work?",
+        "choices": [
+          {
+            "text": "Helping people solve problems",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "Creating something beautiful",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "Making strategic decisions",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Discovering new knowledge",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you prefer to work?",
+        "choices": [
+          {
+            "text": "Collaborating with teams",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "Working independently on projects",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "Leading and managing others",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "Researching and analyzing",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What work environment appeals to you?",
+        "choices": [
+          {
+            "text": "Client-facing and dynamic",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "Creative studio or workshop",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Corporate boardroom",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Laboratory or research facility",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Service Professional",
+        "description": "You're drawn to careers that help others! Consider roles in consulting, healthcare, education, or customer service."
+      },
+      {
+        "name": "Creative Artist",
+        "description": "You have an artistic soul! Explore careers in design, writing, music, film, or other creative industries."
+      },
+      {
+        "name": "Business Leader",
+        "description": "You're a natural leader! Consider roles in management, entrepreneurship, finance, or business development."
+      },
+      {
+        "name": "Research Scientist",
+        "description": "You love discovering new things! Pursue careers in research, academia, data science, or technical innovation."
+      }
+    ]
+  },
+  {
+    "id": -5,
+    "name": "Which Superhero Are You?",
+    "questions": [
+      {
+        "text": "What's your greatest strength?",
+        "choices": [
+          {
+            "text": "Physical strength and courage",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "Intelligence and problem-solving",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "Speed and quick reflexes",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Compassion and empathy",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you handle conflict?",
+        "choices": [
+          {
+            "text": "Face it head-on with determination",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "Outsmart your opponents",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "Strike quickly before they react",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "Try to find a peaceful solution",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What's your ideal superpower?",
+        "choices": [
+          {
+            "text": "Super strength and invulnerability",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "Genius-level intellect and technology",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Super speed and time manipulation",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Healing powers and telepathy",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Superman",
+        "description": "You're a natural protector with incredible strength and unwavering moral compass. You inspire others and never back down from a challenge."
+      },
+      {
+        "name": "Batman",
+        "description": "You're a strategic mastermind who uses intelligence and resources to solve problems. You're prepared for any situation."
+      },
+      {
+        "name": "The Flash",
+        "description": "You're quick-thinking and action-oriented. You can adapt rapidly to changing situations and help others in the nick of time."
+      },
+      {
+        "name": "Wonder Woman",
+        "description": "You combine strength with wisdom and compassion. You fight for justice while seeking to understand and heal conflicts."
+      }
+    ]
+  },
+  {
+    "id": -6,
+    "name": "What Type of Food Lover Are You?",
+    "questions": [
+      {
+        "text": "What's your ideal dining experience?",
+        "choices": [
+          {
+            "text": "Fine dining with exotic ingredients",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "Comfort food that reminds you of home",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "Healthy, organic, and sustainable meals",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Quick, convenient, and tasty",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you choose what to eat?",
+        "choices": [
+          {
+            "text": "I seek out unique and rare dishes",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "I stick to familiar favorites",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "I read nutrition labels carefully",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "I grab whatever's available",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What's most important in food?",
+        "choices": [
+          {
+            "text": "Artistic presentation and flavor complexity",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "Emotional connection and memories",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Nutritional value and quality ingredients",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Convenience and satisfying hunger",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Gourmet Explorer",
+        "description": "You're a culinary adventurer who seeks out unique flavors and dining experiences. You appreciate artistry in food preparation."
+      },
+      {
+        "name": "Comfort Food Enthusiast",
+        "description": "You find joy in familiar, hearty meals that bring back good memories. Food is about connection and emotional satisfaction."
+      },
+      {
+        "name": "Health-Conscious Foodie",
+        "description": "You prioritize nutrition and sustainability. You believe good food should nourish both body and planet."
+      },
+      {
+        "name": "Practical Eater",
+        "description": "You value convenience and efficiency in your meals. Food is fuel, and you prefer simple, satisfying options."
+      }
+    ]
+  },
+  {
+    "id": -7,
+    "name": "What's Your Ideal Pet?",
+    "questions": [
+      {
+        "text": "How much time can you dedicate to a pet daily?",
+        "choices": [
+          {
+            "text": "Several hours for walks and play",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "About an hour for interaction and care",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "30 minutes for feeding and basic care",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Just a few minutes for minimal care",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What type of living space do you have?",
+        "choices": [
+          {
+            "text": "House with a large yard",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "Apartment with some space",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "Small apartment or room",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "Dorm room or shared space",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What do you want from a pet relationship?",
+        "choices": [
+          {
+            "text": "Active companion for adventures",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "Affectionate friend for companionship",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Independent companion that's low-maintenance",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Beautiful, easy-care pet to watch",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Dog",
+        "description": "A loyal, energetic companion perfect for your active lifestyle! Dogs offer unconditional love and are great exercise partners."
+      },
+      {
+        "name": "Cat",
+        "description": "An affectionate yet independent companion! Cats provide comfort and companionship while being relatively low-maintenance."
+      },
+      {
+        "name": "Rabbit",
+        "description": "A gentle, quiet companion perfect for smaller spaces! Rabbits are social animals that can be litter-trained and very affectionate."
+      },
+      {
+        "name": "Fish",
+        "description": "Beautiful, peaceful pets that are perfect for busy lifestyles! An aquarium can be both relaxing and aesthetically pleasing."
+      }
+    ]
+  },
+  {
+    "id": -8,
+    "name": "Which Season Matches Your Personality?",
+    "questions": [
+      {
+        "text": "What activities energize you most?",
+        "choices": [
+          {
+            "text": "Outdoor sports and barbecues",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "Cozy reading and warm drinks",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "Hiking and fresh air adventures",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Gardening and new beginnings",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "How do you handle change?",
+        "choices": [
+          {
+            "text": "I thrive in high-energy situations",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "I prefer stability and routine",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "I enjoy gradual transitions",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "I love fresh starts and new opportunities",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "What's your ideal social setting?",
+        "choices": [
+          {
+            "text": "Beach parties and festivals",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "Intimate gatherings by the fireplace",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Scenic walks with close friends",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Picnics and outdoor celebrations",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Summer",
+        "description": "You're energetic, social, and love being active! You bring warmth and enthusiasm to everything you do."
+      },
+      {
+        "name": "Winter",
+        "description": "You're thoughtful, introspective, and value deep connections. You appreciate quiet moments and cozy comforts."
+      },
+      {
+        "name": "Fall",
+        "description": "You're wise, reflective, and appreciate life's transitions. You find beauty in change and maturity."
+      },
+      {
+        "name": "Spring",
+        "description": "You're optimistic, creative, and always growing! You inspire others with your fresh perspective and energy."
+      }
+    ]
+  },
+  {
+    "id": -9,
+    "name": "What's Your Communication Style?",
+    "questions": [
+      {
+        "text": "How do you prefer to share ideas?",
+        "choices": [
+          {
+            "text": "Detailed presentations with data",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "Enthusiastic storytelling",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "One-on-one conversations",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Visual demonstrations and examples",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "In group discussions, you typically:",
+        "choices": [
+          {
+            "text": "Lead with facts and logical arguments",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "Keep energy high and motivate others",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "Listen carefully and ask thoughtful questions",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "Use gestures and visual aids to explain",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "When giving feedback, you focus on:",
+        "choices": [
+          {
+            "text": "Specific, measurable improvements",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "Encouraging and inspiring others",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Understanding their perspective first",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Showing rather than just telling",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Analytical Communicator",
+        "description": "You communicate with precision and logic. You excel at presenting data-driven arguments and systematic thinking."
+      },
+      {
+        "name": "Inspirational Communicator",
+        "description": "You energize and motivate others through passionate communication. You're great at rallying people around shared goals."
+      },
+      {
+        "name": "Empathetic Communicator",
+        "description": "You connect deeply with others through active listening and understanding. You create safe spaces for honest dialogue."
+      },
+      {
+        "name": "Visual Communicator",
+        "description": "You make complex ideas accessible through demonstrations and visual examples. You help others see what you mean."
+      }
+    ]
+  },
+  {
+    "id": -10,
+    "name": "What's Your Time Management Style?",
+    "questions": [
+      {
+        "text": "How do you plan your day?",
+        "choices": [
+          {
+            "text": "Detailed schedule with specific time blocks",
+            "points": 3,
+            "resultIndex": 0
+          },
+          {
+            "text": "Priority list with flexible timing",
+            "points": 3,
+            "resultIndex": 1
+          },
+          {
+            "text": "General goals with room for spontaneity",
+            "points": 3,
+            "resultIndex": 2
+          },
+          {
+            "text": "Go with the flow and handle things as they come",
+            "points": 3,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "When facing a deadline, you:",
+        "choices": [
+          {
+            "text": "Break it into smaller tasks with mini-deadlines",
+            "points": 2,
+            "resultIndex": 0
+          },
+          {
+            "text": "Focus intensely on the most important parts",
+            "points": 2,
+            "resultIndex": 1
+          },
+          {
+            "text": "Work steadily but allow for creative breaks",
+            "points": 2,
+            "resultIndex": 2
+          },
+          {
+            "text": "Push through with bursts of energy",
+            "points": 2,
+            "resultIndex": 3
+          }
+        ]
+      },
+      {
+        "text": "Your ideal work environment has:",
+        "choices": [
+          {
+            "text": "Clear structure and predictable routines",
+            "points": 1,
+            "resultIndex": 0
+          },
+          {
+            "text": "High focus with minimal distractions",
+            "points": 1,
+            "resultIndex": 1
+          },
+          {
+            "text": "Balance between work and personal time",
+            "points": 1,
+            "resultIndex": 2
+          },
+          {
+            "text": "Flexibility and variety in daily tasks",
+            "points": 1,
+            "resultIndex": 3
+          }
+        ]
+      }
+    ],
+    "results": [
+      {
+        "name": "Structured Planner",
+        "description": "You thrive with detailed organization and systematic approaches. You're reliable and rarely miss deadlines."
+      },
+      {
+        "name": "Focused Achiever",
+        "description": "You excel at prioritizing and concentrating on what matters most. You're efficient and results-oriented."
+      },
+      {
+        "name": "Balanced Organizer",
+        "description": "You maintain healthy boundaries between productivity and personal time. You're sustainable and well-rounded."
+      },
+      {
+        "name": "Flexible Adapter",
+        "description": "You work best with variety and freedom. You're creative and can handle unexpected changes with ease."
+      }
+    ]
   }
 ]
