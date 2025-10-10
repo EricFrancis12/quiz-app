@@ -6,7 +6,7 @@ import { safeParseInt } from "../../lib/utils";
 import { useAPI } from "../../hooks/useAPI";
 import { quizSchema } from "../../lib/schemas";
 import QuizEditor from "../../components/QuizEditor";
-import sampleQuizzesData from "../../lib/sampleQuizzes.json";
+import sampleQuizzes from "../../lib/sampleQuizzes.json";
 import { Overlay } from "../../components/overlay";
 import QuizSelector from "./SampleQuizSelector";
 import { toast } from "react-toastify";
@@ -15,31 +15,29 @@ export default function EditQuizPage() {
   const { quizId } = useParams();
   const navigate = useNavigate();
 
-  const { appData, fetchAppData } = useAppContext();
+  const { appData, fetchAppData, loading } = useAppContext();
   const { fetchData: doSaveQuiz, loading: saving } = useAPI(quizSchema);
 
-  const [error, setError] = useState<string | null>(null);
   const [showSampleQuizModal, setShowSampleQuizModal] = useState(false);
 
   const [editedQuiz, setEditedQuiz] = useState<Quiz | null>(null);
 
-  const sampleQuizzes = sampleQuizzesData as Quiz[];
-
   useEffect(() => {
-    if (quizId) {
-      const quizIdInt = safeParseInt(quizId);
-      if (quizIdInt != null) {
-        const foundQuiz = appData?.quizzes.find(({ id }) => id === quizIdInt);
-        if (foundQuiz) {
-          setEditedQuiz(structuredClone(foundQuiz));
-          return;
+    fetchAppData().then(() => {
+      if (quizId) {
+        const quizIdInt = safeParseInt(quizId);
+        if (quizIdInt != null) {
+          const foundQuiz = appData?.quizzes.find(({ id }) => id === quizIdInt);
+          if (foundQuiz) {
+            setEditedQuiz(structuredClone(foundQuiz));
+            return;
+          }
         }
       }
-    }
 
-    setEditedQuiz(null);
-    setError("Quiz not found");
-  }, [quizId, appData?.quizzes]);
+      setEditedQuiz(null);
+    });
+  }, [quizId]);
 
   async function saveQuiz() {
     if (!editedQuiz) return;
@@ -70,16 +68,8 @@ export default function EditQuizPage() {
     setShowSampleQuizModal(false);
   }
 
-  if (error) {
-    return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        <h2>Error</h2>
-        <p>{error}</p>
-        <button onClick={() => navigate("/dashboard")}>
-          Back to Dashboard
-        </button>
-      </div>
-    );
+  if (loading) {
+    return <div>Loading quiz...</div>;
   }
 
   if (!editedQuiz) {
