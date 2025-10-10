@@ -23,20 +23,18 @@ export default function EditQuizPage() {
   const [editedQuiz, setEditedQuiz] = useState<Quiz | null>(null);
 
   useEffect(() => {
-    fetchAppData().then(() => {
-      if (quizId) {
-        const quizIdInt = safeParseInt(quizId);
-        if (quizIdInt != null) {
-          const foundQuiz = appData?.quizzes.find(({ id }) => id === quizIdInt);
-          if (foundQuiz) {
-            setEditedQuiz(structuredClone(foundQuiz));
-            return;
-          }
+    if (quizId) {
+      const quizIdInt = safeParseInt(quizId);
+      if (quizIdInt != null) {
+        const foundQuiz = appData?.quizzes.find(({ id }) => id === quizIdInt);
+        if (foundQuiz) {
+          setEditedQuiz(structuredClone(foundQuiz));
+          return;
         }
       }
 
       setEditedQuiz(null);
-    });
+    }
   }, [quizId]);
 
   async function saveQuiz() {

@@ -54,7 +54,9 @@ export default function DashboardPage() {
       body: JSON.stringify({ name: "" }),
     }).then((apiResponse) => {
       if (apiResponse?.success) {
-        navigate(`/quiz/${apiResponse.data.id}/edit`);
+        fetchAppData().then(() => {
+          navigate(`/quiz/${apiResponse.data.id}/edit`);
+        });
       } else {
         toast(`Failed to create new quiz. Please try again.`, {
           type: "error",
