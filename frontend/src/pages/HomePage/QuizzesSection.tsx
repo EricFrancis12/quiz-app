@@ -3,7 +3,7 @@ import type { Quiz } from "../../lib/types";
 
 export default function QuizzesSection({ quizzes }: { quizzes: Quiz[] }) {
   const handleQuizClick = (quiz: Quiz) => {
-    console.log("TODO: Selected quiz:", quiz.name);
+    window.open(`/quiz/${quiz.id}`, "_blank");
   };
 
   return (
