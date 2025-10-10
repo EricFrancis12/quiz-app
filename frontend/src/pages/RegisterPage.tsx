@@ -96,17 +96,22 @@ export default function RegisterPage() {
     });
 
     if (apiResponse?.success) {
-      toast("Registration successful! You can now log in.");
+      toast("Registration successful! You may now log in.");
       setTimeout(() => navigate("/login"), 1000);
     }
   }
 
   return (
-    <div className="register-page">
-      <div className="register-container">
-        <h1>Create Account</h1>
+    <div style={{ padding: "40px 20px", maxWidth: "400px", margin: "0 auto" }}>
+      <div>
+        <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
+          Create Account
+        </h1>
 
-        <form onSubmit={handleSubmit} className="register-form">
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        >
           <FormGroup
             type="text"
             id="username"
@@ -141,14 +146,26 @@ export default function RegisterPage() {
             placeholder="Confirm your password"
           />
 
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+          )}
 
-          <button type="submit" disabled={loading} className="submit-button">
-            {loading ? "Creating Account..." : "Register"}
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              backgroundColor: loading ? "#ccc" : "#007bff",
+              color: "white",
+              margin: "20px 0",
+            }}
+          >
+            {loading ? "Creating Account..." : "Submit"}
           </button>
         </form>
 
-        <div className="login-link">
+        <div
+          style={{ textAlign: "center", marginTop: "20px", fontSize: "14px" }}
+        >
           Already have an account? <Link to="/login">Sign in here</Link>
         </div>
       </div>

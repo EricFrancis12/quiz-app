@@ -7,7 +7,8 @@ import {
   MIN_PASSWORD_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "../lib/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type LoginFormData = {
   username: string;
@@ -22,10 +23,11 @@ function defaultLoginFormData(): LoginFormData {
 }
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<LoginFormData>(
     defaultLoginFormData()
   );
-  const [success, setSuccess] = useState("");
 
   const { loading, error, setError, fetchData } = useAPI(userSchema);
 
@@ -69,8 +71,6 @@ export default function LoginPage() {
     e.preventDefault();
     if (loading || !validateForm()) return;
 
-    setSuccess("");
-
     const apiResponse = await fetchData("/api/login", {
       method: "POST",
       headers: {
@@ -83,17 +83,21 @@ export default function LoginPage() {
     });
 
     if (apiResponse?.success) {
-      setSuccess("You are now logged in!");
+      toast("You are now logged in!");
       setFormData(defaultLoginFormData());
+      navigate("/dashboard");
     }
   }
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <h1>Login</h1>
+    <div style={{ padding: "40px 20px", maxWidth: "400px", margin: "0 auto" }}>
+      <div>
+        <h1 style={{ textAlign: "center", marginBottom: "30px" }}>Login</h1>
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        >
           <FormGroup
             type="text"
             id="username"
@@ -117,15 +121,26 @@ export default function LoginPage() {
             placeholder="Enter your password"
           />
 
-          {error && <div className="error-message">{error}</div>}
-          {success && <div className="success-message">{success}</div>}
+          {error && (
+            <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+          )}
 
-          <button type="submit" disabled={loading} className="submit-button">
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              backgroundColor: loading ? "#ccc" : "#007bff",
+              color: "white",
+              margin: "20px 0",
+            }}
+          >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <div className="register-link">
+        <div
+          style={{ textAlign: "center", marginTop: "20px", fontSize: "14px" }}
+        >
           Don't have an account? <Link to="/register">Sign up here</Link>
         </div>
       </div>
