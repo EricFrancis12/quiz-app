@@ -9,6 +9,7 @@ import {
   MIN_USERNAME_LENGTH,
 } from "../lib/constants";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type RegisterFormData = {
   username: string;
@@ -95,8 +96,8 @@ export default function RegisterPage() {
     });
 
     if (apiResponse?.success) {
-      alert("Registration successful! You can now log in.");
-      navigate("/login");
+      toast("Registration successful! You can now log in.");
+      setTimeout(() => navigate("/login"), 1000);
     }
   }
 

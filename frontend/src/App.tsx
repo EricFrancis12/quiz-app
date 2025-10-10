@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -13,6 +14,8 @@ import Auth from "./contexts/AppContext/Auth";
 export default function App() {
   return (
     <AppDataProvider>
+      <ToastContainer />
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />

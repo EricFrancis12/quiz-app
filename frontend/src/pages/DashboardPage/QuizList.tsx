@@ -28,6 +28,7 @@ export default function QuizList({
     <div style={{ display: "grid", gap: "20px" }}>
       {quizzes.map((quiz) => (
         <QuizViewer
+          key={quiz.id}
           quiz={quiz}
           deletionDisabled={deletionDisabled}
           onTakeQuizIntent={onTakeQuizIntent}

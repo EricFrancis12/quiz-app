@@ -9,6 +9,7 @@ import QuizEditor from "../../components/QuizEditor";
 import sampleQuizzesData from "../../lib/sampleQuizzes.json";
 import { Overlay } from "../../components/overlay";
 import QuizSelector from "./SampleQuizSelector";
+import { toast } from "react-toastify";
 
 export default function EditQuizPage() {
   const { quizId } = useParams();
@@ -53,9 +54,9 @@ export default function EditQuizPage() {
     }).then((apiResponse) => {
       if (apiResponse?.success) {
         fetchAppData();
-        alert("Quiz saved successfully!");
+        toast("Quiz saved successfully!");
       } else {
-        alert("Failed to save quiz. Please try again.");
+        toast("Failed to save quiz. Please try again.", { type: "error" });
       }
     });
   }

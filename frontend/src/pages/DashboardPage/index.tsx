@@ -4,6 +4,7 @@ import { useAPI } from "../../hooks/useAPI";
 import { quizSchema } from "../../lib/schemas";
 import QuizList from "./QuizList";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ export default function DashboardPage() {
       if (apiResponse?.success) {
         fetchAppData();
       } else {
-        alert(`Failed to delete quiz "${quizName}". Please try again.`);
+        toast(`Failed to delete quiz "${quizName}". Please try again.`, {
+          type: "error",
+        });
       }
     });
   }
@@ -42,7 +45,9 @@ export default function DashboardPage() {
       if (apiResponse?.success) {
         navigate(`/quiz/${apiResponse.data.id}/edit`);
       } else {
-        alert(`Failed to create new quiz. Please try again.`);
+        toast(`Failed to create new quiz. Please try again.`, {
+          type: "error",
+        });
       }
     });
   }
