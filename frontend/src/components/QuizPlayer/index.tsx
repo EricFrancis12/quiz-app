@@ -76,21 +76,29 @@ export default function QuizPlayer({ quiz }: { quiz: Quiz }) {
     <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
       <div style={{ marginBottom: "20px" }}>
         <h1>{quiz.name}</h1>
-        <QuizProgress
-          currentQuestionIndex={currentQuestionIndex}
-          totalQuestions={quiz.questions.length}
-        />
+        {quiz.questions.length > 0 && (
+          <QuizProgress
+            currentQuestionIndex={currentQuestionIndex}
+            totalQuestions={quiz.questions.length}
+          />
+        )}
       </div>
 
       <div>
-        <div style={{ marginBottom: "30px" }}>
-          <h2>{currentQuestion.text}</h2>
-        </div>
+        {quiz.questions.length === 0 ? (
+          <div>This quiz has no questions! 😀</div>
+        ) : (
+          <>
+            <div style={{ marginBottom: "30px" }}>
+              <h2>{currentQuestion.text}</h2>
+            </div>
 
-        <QuestionChoices
-          choices={currentQuestion.choices}
-          onChoiceSelection={handleChoiceSelection}
-        />
+            <QuestionChoices
+              choices={currentQuestion.choices}
+              onChoiceSelection={handleChoiceSelection}
+            />
+          </>
+        )}
       </div>
     </div>
   );
