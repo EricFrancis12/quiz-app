@@ -5,17 +5,28 @@ import { quizSchema } from "../../lib/schemas";
 import QuizList from "./QuizList";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useConfirm } from "../../hooks/useConfirm";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
 
   const { appData, fetchAppData } = useAppContext();
+  const { showConfirm, ConfirmDialog } = useConfirm();
 
   const { loading: deleting, fetchData: doDeleteQuiz } = useAPI(z.number());
   const { loading: creating, fetchData: doCreateQuiz } = useAPI(quizSchema);
 
   async function deleteQuiz(quizId: number, quizName: string) {
-    if (!confirm(`Are you sure you want to delete "${quizName}"?`)) {
+    const formattedQuizName = quizName ? `"${quizName}"` : "this quiz";
+
+    const confirmed = await showConfirm({
+      title: "Delete Quiz",
+      message: `Are you sure you want to delete ${formattedQuizName}? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+
+    if (!confirmed) {
       return;
     }
 
@@ -91,6 +102,8 @@ export default function DashboardPage() {
           onDeleteIntent={deleteQuiz}
         />
       </div>
+
+      {ConfirmDialog}
     </div>
   );
 }
